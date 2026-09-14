@@ -1,13 +1,13 @@
 "use client";
 
 import { QRCodeSVG } from "qrcode.react";
-import { SITE_ORIGIN } from "@/lib/site";
+
 
 /**
  * A real, scannable QR code for the profile URL, with the brand mark punched
  * out of the middle (error correction level H leaves room for it).
  */
-export function ProfileQr({ size = 220, value = SITE_ORIGIN }: { size?: number; value?: string }) {
+export function ProfileQr({ size = 220, value }: { size?: number; value: string }) {
   return (
     <QRCodeSVG
       value={value}

@@ -138,11 +138,19 @@ const BLANKS: Record<ListKey, Record<string, unknown>> = {
   milestones: { title: "", description: "", status: "planned", progress: 0, meta: "" },
 };
 
-export function ContentProvider({ children }: { children: ReactNode }) {
-  const [content, setContent] = useState<Content>(DEFAULT_CONTENT);
+export function ContentProvider({
+  children,
+  fixed,
+}: {
+  children: ReactNode;
+  /** Pins the provider to one profile: no storage is read or written. */
+  fixed?: Content;
+}) {
+  const [content, setContent] = useState<Content>(fixed ?? DEFAULT_CONTENT);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
+    if (fixed) return;
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
@@ -157,17 +165,17 @@ export function ContentProvider({ children }: { children: ReactNode }) {
       /* ignore malformed storage */
     }
     setHydrated(true);
-  }, []);
+  }, [fixed]);
 
   // Persist after the state settles so back-to-back edits cannot clobber each other.
   useEffect(() => {
-    if (!hydrated) return;
+    if (fixed || !hydrated) return;
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(content));
     } catch {
       /* storage may be unavailable */
     }
-  }, [content, hydrated]);
+  }, [content, hydrated, fixed]);
 
   const updateProfile = useCallback(
     (p: Partial<Profile>) => setContent((c) => ({ ...c, profile: { ...c.profile, ...p } })),

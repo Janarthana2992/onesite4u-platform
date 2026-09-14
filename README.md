@@ -18,7 +18,8 @@ Open <http://localhost:3000>.
 
 | Route      | What it is                                                                                              |
 | ---------- | ------------------------------------------------------------------------------------------------------- |
-| `/`        | The public page. Mobile app view below 1024px, full desktop web page above it — one source, two layouts. |
+| `/`        | Your own page — whatever is loaded in the editor. Mobile app view below 1024px, desktop web page above it. |
+| `/<handle>` | A published profile: `/sheela`, `/aarav`, `/meera`, `/rohan`. Statically generated, pinned to that person, and what their QR code opens. |
 | `/webview` | The canvas editor: block library, live page, properties panel.                                            |
 | `/admin`   | The dashboard: content, enquiries, analytics and the live editor.                                         |
 
@@ -122,7 +123,7 @@ Four complete pages built from the same blocks, switchable from **Admin → Exam
 ## Structure
 
 ```
-app/                     layout, public page, admin, canvas editor
+app/                     layout, your page, /[handle] published profiles, admin, canvas editor
 components/              ui primitives, profile sections, sheets, stores, providers
 components/editor.tsx    canvas editor: selection, drag, library, properties
 components/live-editor.tsx   three-pane live editor
@@ -131,7 +132,7 @@ data/blocks.ts           block registry — 41 types, defaults, editable fields
 data/design.ts           palettes, templates, fonts, banners
 data/profiles.ts         the four example profiles
 data/seed.ts             default demo content
-lib/site.ts              the published site URL, in one place
+lib/site.ts              the published site URL and per-handle links, in one place
 lib/rag.ts               retrieval and answer composition
 lib/ingest.ts            document chunking
 lib/account-ai.ts        private account assistant

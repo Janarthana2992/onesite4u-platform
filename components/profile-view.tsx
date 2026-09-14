@@ -40,7 +40,7 @@ import { DesignScope, useDesign } from "@/components/design-store";
 import { useContent } from "@/components/content-store";
 import { useMediaQuery } from "@/lib/hooks";
 import { ProfileQr } from "@/components/qr-code";
-import { SITE_HOST } from "@/lib/site";
+import { profileLabel } from "@/lib/site";
 import { Reveal } from "@/components/reveal";
 
 export type ProfileVariant = "auto" | "mobile" | "web";
@@ -190,10 +190,10 @@ export function ProfileView({
               </Button>
               <Card className="p-4">
                 <div className="flex items-center gap-3">
-                  <div className="shrink-0 rounded-lg bg-white p-1 shadow-sm dark:bg-white"><ProfileQr size={64} /></div>
+                  <div className="shrink-0 rounded-lg bg-white p-1 shadow-sm dark:bg-white"><ProfileQr size={64} value={profile.url} /></div>
                   <div className="min-w-0">
                     <p className="text-sm font-semibold">Share this profile</p>
-                    <p className="truncate text-xs text-slate-500 dark:text-zinc-400">{SITE_HOST}</p>
+                    <p className="truncate text-xs text-slate-500 dark:text-zinc-400">{profileLabel(profile.handle)}</p>
                   </div>
                 </div>
                 <div className="mt-3 grid grid-cols-2 gap-2">

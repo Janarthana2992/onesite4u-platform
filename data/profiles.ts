@@ -5,7 +5,7 @@
  */
 
 import { createBlock, type Block } from "@/data/blocks";
-import { SITE_ORIGIN } from "@/lib/site";
+import { profileUrl } from "@/lib/site";
 import { DEFAULT_SEED, type SeedContent } from "@/data/seed";
 
 /** Per-block props a profile seeds: headings plus whatever that block holds. */
@@ -48,7 +48,7 @@ const photographer: ExampleProfile = {
       location: "Civil Lines, Jaipur, Rajasthan",
       city: "Jaipur · travels worldwide",
       handle: "aarav",
-      url: SITE_ORIGIN,
+      url: profileUrl("aarav"),
       org: { name: "Silverlight Studio", note: "Documentary weddings · Est. 2017", initials: "SL" },
       stats: { a: "180+", b: "4.9", c: "9 yrs" },
       statLabels: { a: "Weddings shot", b: "Rating", c: "Experience" },
@@ -231,7 +231,7 @@ const yoga: ExampleProfile = {
       location: "Panampilly Nagar, Kochi, Kerala",
       city: "Kochi, Kerala",
       handle: "meera",
-      url: SITE_ORIGIN,
+      url: profileUrl("meera"),
       org: { name: "Anahata Studio", note: "E-RYT 500 · Est. 2015", initials: "AN" },
       stats: { a: "2,400+", b: "4.9", c: "11 yrs" },
       statLabels: { a: "Students taught", b: "Rating", c: "Teaching" },
@@ -420,7 +420,7 @@ const advocate: ExampleProfile = {
       location: "Deccan Gymkhana, Pune, Maharashtra",
       city: "Pune, Maharashtra",
       handle: "rohan",
-      url: SITE_ORIGIN,
+      url: profileUrl("rohan"),
       org: { name: "Deshpande & Associates", note: "Bar Council of Maharashtra & Goa · Est. 2011", initials: "DA" },
       stats: { a: "600+", b: "4.8", c: "14 yrs" },
       statLabels: { a: "Matters handled", b: "Rating", c: "At the bar" },

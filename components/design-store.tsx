@@ -148,8 +148,36 @@ function historyReducer(state: HistoryState, action: HistoryAction): HistoryStat
   }
 }
 
-export function DesignProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(historyReducer, { design: DEFAULT_DESIGN, past: [], future: [] });
+/** Builds a full design from a template id and a page, without touching storage. */
+export function designFromTemplate(templateId: string, blocks: Block[]): Design {
+  const t = templateById(templateId);
+  return {
+    ...DEFAULT_DESIGN,
+    templateId: t.id,
+    paletteId: t.palette,
+    accentId: t.accent,
+    fontId: t.font,
+    radiusId: t.radius,
+    bannerId: t.banner,
+    cardStyle: t.card,
+    buttonShape: t.button,
+    blocks,
+  };
+}
+
+export function DesignProvider({
+  children,
+  fixed,
+}: {
+  children: ReactNode;
+  /** Pins the provider to one design: no storage is read or written. */
+  fixed?: Design;
+}) {
+  const [state, dispatch] = useReducer(historyReducer, {
+    design: fixed ?? DEFAULT_DESIGN,
+    past: [],
+    future: [],
+  });
   const design = state.design;
   const setDesign = useCallback(
     (fn: Design | ((d: Design) => Design)) =>
@@ -160,6 +188,7 @@ export function DesignProvider({ children }: { children: ReactNode }) {
 
   // Read saved design after mount so server and client markup match.
   useEffect(() => {
+    if (fixed) return;
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) dispatch({ type: "load", design: normalize({ ...DEFAULT_DESIGN, ...JSON.parse(raw) }) });
@@ -167,17 +196,17 @@ export function DesignProvider({ children }: { children: ReactNode }) {
       /* ignore malformed storage */
     }
     setHydrated(true);
-  }, []);
+  }, [fixed]);
 
   // Persist after the state settles so back-to-back edits cannot clobber each other.
   useEffect(() => {
-    if (!hydrated) return;
+    if (fixed || !hydrated) return;
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(design));
     } catch {
       /* storage may be unavailable */
     }
-  }, [design, hydrated]);
+  }, [design, hydrated, fixed]);
 
   const update = useCallback((patch: Partial<Design>) => setDesign((d) => ({ ...d, ...patch })), []);
 

@@ -21,7 +21,7 @@ import { Button, Field, Input, Sheet, SuccessState, Textarea, cn } from "@/compo
 import { useToast } from "@/components/providers";
 import { useFakeSubmit } from "@/lib/hooks";
 import { ProfileQr } from "@/components/qr-code";
-import { SITE_HOST } from "@/lib/site";
+import { profileLabel } from "@/lib/site";
 
 /* ======================= Booking ======================= */
 
@@ -522,14 +522,14 @@ export function QrSheet({ open, onClose }: { open: boolean; onClose: () => void 
       <div className="flex flex-col items-center">
         <div className="rounded-3xl bg-gradient-to-br from-brand-600 to-violet-600 p-1 shadow-xl shadow-brand-600/30">
           <div className="rounded-[20px] bg-white p-4">
-            <ProfileQr size={210} />
+            <ProfileQr size={210} value={profile.url} />
           </div>
         </div>
         <div className="mt-4 flex items-center gap-2">
           <img src={profile.avatar} alt="" className="h-9 w-9 rounded-full object-cover" />
           <div>
             <p className="text-sm font-semibold leading-tight">{profile.name}</p>
-            <p className="text-xs text-slate-500 dark:text-zinc-400">{SITE_HOST}</p>
+            <p className="text-xs text-slate-500 dark:text-zinc-400">{profileLabel(profile.handle)}</p>
           </div>
         </div>
         <p className="mt-3 text-center text-xs text-slate-400">

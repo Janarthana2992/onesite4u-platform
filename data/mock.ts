@@ -63,7 +63,7 @@ export type Booking = {
   status: "Confirmed" | "Pending" | "Completed";
 };
 
-import { SITE_ORIGIN } from "@/lib/site";
+import { profileUrl } from "@/lib/site";
 
 export type Profile = {
   name: string;
@@ -99,7 +99,7 @@ export const profile: Profile = {
   location: "T. Nagar, Chennai, Tamil Nadu",
   city: "Chennai, India",
   handle: "sheela",
-  url: SITE_ORIGIN,
+  url: profileUrl("sheela"),
   org: { name: "Octogon Mitra Investments", note: "SEBI registered · Est. 2014", initials: "OM" },
   stats: { a: "350+", b: "4.9", c: "12 yrs" },
   statLabels: { a: "Clients", b: "Rating", c: "Experience" },
