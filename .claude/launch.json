@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "onesite4u-dev",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "npm install --no-audit --no-fund && npm run dev -- --port 3210"],
+      "port": 3210
+    }
+  ]
+}

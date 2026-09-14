@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* primary scale (indigo) */
+    --c-50: 238 242 255;
+    --c-100: 224 231 255;
+    --c-200: 199 210 254;
+    --c-300: 165 180 252;
+    --c-400: 129 140 248;
+    --c-500: 99 102 241;
+    --c-600: 79 70 229;
+    --c-700: 67 56 202;
+    --c-800: 55 48 163;
+    --c-900: 49 46 129;
+    /* accent scale (violet) */
+    --a-50: 245 243 255;
+    --a-100: 237 233 254;
+    --a-200: 221 214 254;
+    --a-300: 196 181 253;
+    --a-400: 167 139 250;
+    --a-500: 139 92 246;
+    --a-600: 124 58 237;
+    --a-700: 109 40 217;
+    --a-800: 91 33 182;
+    --a-900: 76 29 149;
+
+    --font-head: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+    --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+    --r-lg: 0.5rem;
+    --r-xl: 0.75rem;
+    --r-2xl: 1rem;
+    --r-3xl: 1.5rem;
+    --r-btn: 0.75rem;
+  }
+
+  html {
+    -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-slate-200 font-sans text-slate-900 antialiased dark:bg-black dark:text-zinc-100;
+    text-rendering: optimizeLegibility;
+  }
+  h1,
+  h2,
+  h3 {
+    letter-spacing: -0.02em;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-head);
+  }
+}
+
+@layer components {
+  /* Soft page background with a hint of the brand hue */
+  .os-page {
+    background-image:
+      radial-gradient(70rem 34rem at 12% -6rem, rgb(var(--c-500) / 0.10), transparent 62%),
+      radial-gradient(60rem 30rem at 92% 4rem, rgb(var(--a-500) / 0.08), transparent 60%);
+  }
+  /* Glass panel used by the desktop identity card */
+  .os-glass {
+    backdrop-filter: saturate(1.4) blur(10px);
+  }
+  /* Quiet separator between long sections */
+  .os-sep::after {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-top: 3.5rem;
+    background: linear-gradient(90deg, transparent, rgb(148 163 184 / 0.28), transparent);
+  }
+  .os-card {
+    transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  }
+  /* Typography controls from the editor */
+  [data-card] {
+    font-size: var(--os-base, 16px);
+    line-height: var(--os-leading, 1.6);
+  }
+
+  /* Card styles driven by the design customizer */
+  [data-card="outlined"] .os-card {
+    @apply border-2 border-slate-300 shadow-none dark:border-zinc-700;
+  }
+  [data-card="elevated"] .os-card {
+    @apply border-transparent shadow-[0_12px_32px_-14px_rgb(15_23_42/0.35)] dark:border-zinc-800 dark:shadow-[0_12px_32px_-14px_rgb(0_0_0/0.8)];
+  }
+  [data-card="flat"] .os-card {
+    @apply border-transparent bg-slate-100 shadow-none dark:bg-zinc-900;
+  }
+  /* Inside a device frame the status bar occupies the top strip */
+  [data-framed="1"] .os-header-tools {
+    top: 2.4rem;
+  }
+  [data-framed="1"] .os-header-brand {
+    top: 2.4rem;
+  }
+}
+
+@layer components {
+  .os-inline:empty::before {
+    content: attr(data-placeholder);
+    opacity: 0.45;
+  }
+  .os-inline:hover {
+    box-shadow: 0 0 0 1px rgb(var(--c-500) / 0.35);
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}

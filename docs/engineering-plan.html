@@ -1,0 +1,507 @@
+<title>OneSite4U Engineering Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;450;500;600&display=swap">
+
+<style>
+  :root {
+    --paper: #f5f8f8;
+    --surface: #ffffff;
+    --surface-2: #eaf0f0;
+    --ink: #0b1112;
+    --ink-2: #29373a;
+    --slate: #57696d;
+    --mist: #dae4e4;
+
+    --teal: #0e7c7b;
+    --teal-soft: #dcefee;
+    --indigo: #4f46e5;
+    --indigo-soft: #eceafd;
+    --amber: #9c5f11;
+    --amber-soft: #f9efdc;
+    --rose: #a83246;
+    --rose-soft: #fbe7ea;
+
+    --dot: rgba(87, 105, 109, 0.2);
+    --shadow: 0 1px 2px rgba(11, 17, 18, .05), 0 12px 32px -18px rgba(11, 17, 18, .26);
+
+    --display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    --body: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+    --step--1: clamp(.75rem, .72rem + .15vw, .82rem);
+    --step-0: clamp(.94rem, .89rem + .22vw, 1.05rem);
+    --step-1: clamp(1.1rem, 1rem + .4vw, 1.3rem);
+    --step-2: clamp(1.4rem, 1.2rem + .8vw, 1.9rem);
+    --step-3: clamp(1.9rem, 1.5rem + 1.7vw, 3rem);
+    --step-4: clamp(2.4rem, 1.7rem + 3vw, 4.2rem);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #080d0e;
+      --surface: #101819;
+      --surface-2: #162022;
+      --ink: #e9f1f1;
+      --ink-2: #bccaca;
+      --slate: #8a9e9f;
+      --mist: #223032;
+      --teal: #4fd1c5;
+      --teal-soft: #0e2c2b;
+      --indigo: #8b84f7;
+      --indigo-soft: #1d1c3b;
+      --amber: #dfa557;
+      --amber-soft: #2c2315;
+      --rose: #e98a99;
+      --rose-soft: #34181d;
+      --dot: rgba(138, 158, 159, 0.2);
+      --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 14px 36px -20px rgba(0, 0, 0, .85);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #080d0e;
+    --surface: #101819;
+    --surface-2: #162022;
+    --ink: #e9f1f1;
+    --ink-2: #bccaca;
+    --slate: #8a9e9f;
+    --mist: #223032;
+    --teal: #4fd1c5;
+    --teal-soft: #0e2c2b;
+    --indigo: #8b84f7;
+    --indigo-soft: #1d1c3b;
+    --amber: #dfa557;
+    --amber-soft: #2c2315;
+    --rose: #e98a99;
+    --rose-soft: #34181d;
+    --dot: rgba(138, 158, 159, 0.2);
+    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 14px 36px -20px rgba(0, 0, 0, .85);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    background-image: radial-gradient(circle at 1px 1px, var(--dot) 1px, transparent 0);
+    background-size: 26px 26px;
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: var(--step-0);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 { font-family: var(--display); font-weight: 700; letter-spacing: -0.022em; text-wrap: balance; margin: 0; line-height: 1.05; }
+  p { margin: 0; }
+  ul { margin: 0; padding: 0; list-style: none; }
+  strong, b { font-weight: 600; }
+  code {
+    font-family: var(--mono);
+    font-size: .88em;
+    background: var(--surface-2);
+    padding: .08em .35em;
+    border-radius: 5px;
+  }
+
+  .deck { position: relative; }
+  .slide {
+    display: none;
+    min-height: 100dvh;
+    padding: clamp(2.2rem, 4vw, 3.6rem) clamp(1.1rem, 4vw, 4.5rem) 5.5rem;
+    max-width: 1260px;
+    margin: 0 auto;
+  }
+  .slide.is-active { display: flex; flex-direction: column; justify-content: center; gap: clamp(1.2rem, 2.2vw, 2rem); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .slide.is-active > * { animation: rise .42s cubic-bezier(.2,.7,.3,1) both; }
+    .slide.is-active > *:nth-child(2) { animation-delay: .05s; }
+    .slide.is-active > *:nth-child(3) { animation-delay: .1s; }
+    .slide.is-active > *:nth-child(4) { animation-delay: .14s; }
+  }
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+  .eyebrow {
+    font-family: var(--mono); font-size: var(--step--1); font-weight: 500;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--slate);
+    display: flex; align-items: center; gap: .6rem;
+  }
+  .eyebrow::before { content: ""; width: 1.6rem; height: 2px; background: var(--teal); border-radius: 2px; }
+
+  .title { font-size: var(--step-3); }
+  .lede { font-size: var(--step-1); color: var(--ink-2); max-width: 64ch; line-height: 1.45; }
+  .note { font-size: var(--step--1); color: var(--slate); }
+
+  .grid { display: grid; gap: clamp(.65rem, 1.1vw, .95rem); }
+  .g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  @media (max-width: 900px) { .g3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 640px) { .g2, .g3 { grid-template-columns: minmax(0, 1fr); } }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--mist); border-radius: 14px;
+    padding: clamp(.85rem, 1.4vw, 1.15rem); box-shadow: var(--shadow);
+    display: flex; flex-direction: column; gap: .4rem;
+  }
+  .card h3 { font-size: var(--step-1); letter-spacing: -.015em; }
+  .card p { color: var(--slate); font-size: var(--step--1); line-height: 1.5; }
+
+  .chip {
+    font-family: var(--mono); font-size: .66rem; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--teal); background: var(--teal-soft); border-radius: 999px;
+    padding: .2rem .5rem; align-self: flex-start; font-weight: 500;
+  }
+  .chip.ind { color: var(--indigo); background: var(--indigo-soft); }
+  .chip.warn { color: var(--amber); background: var(--amber-soft); }
+  .chip.crit { color: var(--rose); background: var(--rose-soft); }
+
+  .figs { display: flex; flex-wrap: wrap; gap: clamp(1rem, 3vw, 2.6rem); }
+  .fig { display: flex; flex-direction: column; gap: .12rem; }
+  .fig b { font-family: var(--display); font-size: var(--step-2); font-weight: 800; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+  .fig span { font-family: var(--mono); font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--slate); }
+  .fig.hot b { color: var(--teal); }
+
+  .rows { display: flex; flex-direction: column; }
+  .row {
+    display: grid; grid-template-columns: 9rem minmax(0, 1fr);
+    gap: clamp(.6rem, 2vw, 1.5rem); padding: .72rem 0;
+    border-top: 1px solid var(--mist); align-items: start;
+  }
+  .row:last-child { border-bottom: 1px solid var(--mist); }
+  .row dt { font-family: var(--mono); font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; color: var(--slate); padding-top: .15rem; }
+  .row dd { margin: 0; font-size: var(--step-0); color: var(--ink-2); }
+  .row dd b { color: var(--ink); }
+  @media (max-width: 640px) { .row { grid-template-columns: minmax(0, 1fr); gap: .2rem; } }
+
+  /* stack picks */
+  .stack { display: flex; flex-direction: column; gap: .5rem; }
+  .pick {
+    display: grid;
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    gap: .8rem;
+    border: 1px solid var(--mist);
+    border-radius: 12px;
+    background: var(--surface);
+    padding: .7rem .85rem;
+    align-items: start;
+  }
+  .pick .layer { font-family: var(--mono); font-size: .68rem; letter-spacing: .07em; text-transform: uppercase; color: var(--slate); padding-top: .2rem; }
+  .pick .body b { font-family: var(--display); font-size: var(--step-0); font-weight: 700; letter-spacing: -.01em; color: var(--teal); }
+  .pick .body p { font-size: .8rem; color: var(--slate); line-height: 1.45; margin-top: .12rem; }
+  .pick .body em { font-style: normal; color: var(--ink-2); }
+  @media (max-width: 640px) { .pick { grid-template-columns: minmax(0, 1fr); gap: .15rem; } }
+
+  .split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(.8rem, 2vw, 1.3rem); }
+  @media (max-width: 780px) { .split { grid-template-columns: minmax(0, 1fr); } }
+
+  .panel {
+    border: 1px solid var(--mist); border-radius: 14px; background: var(--surface);
+    padding: clamp(.95rem, 1.5vw, 1.3rem); display: flex; flex-direction: column; gap: .6rem;
+  }
+  .panel.tint { background: var(--surface-2); }
+  .panel h3 { font-size: var(--step-1); }
+  .panel li { display: flex; gap: .55rem; font-size: var(--step--1); color: var(--ink-2); line-height: 1.5; padding: .26rem 0; }
+  .panel li::before { content: ""; flex: none; width: 5px; height: 5px; border-radius: 2px; background: var(--teal); margin-top: .5rem; }
+  .panel.tint li::before { background: var(--slate); }
+
+  .phases { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .65rem; }
+  @media (max-width: 900px) { .phases { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 560px) { .phases { grid-template-columns: minmax(0, 1fr); } }
+  .phase {
+    border: 1px solid var(--mist); border-radius: 14px; background: var(--surface);
+    padding: clamp(.75rem, 1.2vw, 1rem); display: flex; flex-direction: column; gap: .35rem;
+    position: relative; overflow: hidden;
+  }
+  .phase::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 3px; background: var(--teal); opacity: var(--fill, .25); }
+  .phase .who { font-family: var(--mono); font-size: .67rem; letter-spacing: .07em; text-transform: uppercase; color: var(--slate); }
+  .phase b { font-family: var(--display); font-size: var(--step-1); font-weight: 700; letter-spacing: -.02em; }
+  .phase ul { display: flex; flex-direction: column; gap: .22rem; margin-top: .1rem; }
+  .phase li { font-size: .77rem; color: var(--slate); line-height: 1.42; }
+  .phase .cost { margin-top: auto; padding-top: .5rem; border-top: 1px solid var(--mist); font-family: var(--mono); font-size: .73rem; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+
+  /* request path diagram */
+  .path { display: flex; flex-wrap: wrap; gap: .4rem; align-items: stretch; }
+  .hop {
+    flex: 1 1 9rem; border: 1px solid var(--mist); border-radius: 11px; background: var(--surface);
+    padding: .6rem .7rem; display: flex; flex-direction: column; gap: .15rem;
+  }
+  .hop em { font-family: var(--mono); font-style: normal; font-size: .65rem; color: var(--teal); letter-spacing: .07em; }
+  .hop span { font-size: .78rem; color: var(--ink-2); line-height: 1.35; }
+  .hop.cold { border-style: dashed; background: transparent; }
+  .hop.cold em { color: var(--slate); }
+
+  .cover-mark { display: inline-flex; align-items: center; gap: .6rem; font-family: var(--mono); font-size: .74rem; letter-spacing: .16em; text-transform: uppercase; color: var(--slate); }
+  .cover-mark i { width: 26px; height: 26px; border-radius: 7px; background: var(--teal); display: grid; place-items: center; color: #fff; font-style: normal; font-family: var(--display); font-weight: 800; font-size: .8rem; }
+  .cover h1 { font-size: var(--step-4); font-weight: 800; letter-spacing: -.035em; }
+  .cover .meta { display: flex; flex-wrap: wrap; gap: .5rem 1.6rem; font-family: var(--mono); font-size: .74rem; color: var(--slate); border-top: 1px solid var(--mist); padding-top: 1rem; }
+
+  .rail {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+    display: flex; align-items: center; gap: 1rem;
+    padding: .6rem clamp(1rem, 4vw, 2.2rem);
+    background: color-mix(in srgb, var(--paper) 86%, transparent);
+    backdrop-filter: blur(10px); border-top: 1px solid var(--mist);
+  }
+  .dots { display: flex; gap: 5px; flex: 1; flex-wrap: wrap; }
+  .dot { width: 20px; height: 5px; border-radius: 3px; border: 0; padding: 0; background: var(--mist); cursor: pointer; transition: background .18s ease, transform .18s ease; }
+  .dot:hover { background: var(--slate); }
+  .dot[aria-current="true"] { background: var(--teal); transform: scaleY(1.5); }
+  .dot:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+  .counter { font-family: var(--mono); font-size: .74rem; color: var(--slate); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .nav { display: flex; gap: .35rem; }
+  .nav button { font-family: var(--mono); font-size: .8rem; width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--mist); background: var(--surface); color: var(--ink-2); cursor: pointer; line-height: 1; }
+  .nav button:hover { border-color: var(--teal); color: var(--teal); }
+  .nav button:disabled { opacity: .35; cursor: default; }
+  .nav button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+  @media (max-width: 620px) { .dots { display: none; } .rail { justify-content: space-between; } }
+</style>
+
+<div class="deck">
+
+  <!-- 1 ── cover -->
+  <section class="slide cover">
+    <span class="cover-mark"><i>1S</i> OneSite4U · Engineering plan</span>
+    <h1>From a demo<br>to five million profiles.</h1>
+    <p class="lede">The architecture, the technology choices behind each layer, and the four phases that get there — written to be argued with before any of it is built.</p>
+    <div class="meta">
+      <span>Read-dominated workload</span>
+      <span>Edge-first rendering</span>
+      <span>One database until 1M</span>
+      <span>~$0.015 per profile per month at scale</span>
+    </div>
+  </section>
+
+  <!-- 2 ── shape of the load -->
+  <section class="slide">
+    <span class="eyebrow">The shape of the load</span>
+    <h2 class="title">This is a caching problem, not a database problem.</h2>
+    <p class="lede">Assume 5M profiles averaging 150 views a month: roughly <b>750M page views</b> against about <b>30M edits</b>. A read-to-write ratio near <b>25,000 to 1</b>, where every read is a public page that can be rendered before anyone asks for it.</p>
+    <div class="figs">
+      <div class="fig hot"><b>~290/s</b><span>Average reads</span></div>
+      <div class="fig hot"><b>~3,000/s</b><span>Peak reads</span></div>
+      <div class="fig"><b>~12/s</b><span>Writes</span></div>
+      <div class="fig"><b>&gt;97%</b><span>Target edge hit rate</span></div>
+      <div class="fig"><b>~50 TB</b><span>Media at rest</span></div>
+      <div class="fig"><b>~100M</b><span>Knowledge vectors</span></div>
+    </div>
+    <div class="path">
+      <div class="hop"><em>1 · edge</em><span>CDN serves cached HTML for <code>/handle</code></span></div>
+      <div class="hop"><em>97%+ stop here</em><span>No origin, no database, no cost beyond bandwidth</span></div>
+      <div class="hop cold"><em>2 · origin</em><span>Miss or revalidation renders the page</span></div>
+      <div class="hop cold"><em>3 · data</em><span>Postgres read replica, Redis for hot metadata</span></div>
+    </div>
+    <p class="note">The consequence: capacity planning is about hit rate and bandwidth, not query throughput. A single Postgres primary absorbs the write side three orders of magnitude over.</p>
+  </section>
+
+  <!-- 3 ── architecture -->
+  <section class="slide">
+    <span class="eyebrow">Architecture</span>
+    <h2 class="title">Six decisions that carry the whole system.</h2>
+    <dl class="rows">
+      <div class="row"><dt>Edge first</dt><dd><b>Each profile renders to static HTML and lives on the CDN</b>, revalidated in the background, with a publish purging exactly one path. At 97% hit rate the origin sees under 100 requests a second.</dd></div>
+      <div class="row"><dt>Origin</dt><dd>Stateless app servers, <b>Postgres primary with read replicas</b>, Redis for hot metadata, sessions, rate limits and cached assistant answers.</dd></div>
+      <div class="row"><dt>Data shape</dt><dd>Profiles and blocks are relational rows with <b>block props in JSONB</b> — 41 block types with different fields do not belong in rigid columns, and JSONB keeps schema changes out of migrations.</dd></div>
+      <div class="row"><dt>Media</dt><dd>Object storage behind an image CDN that resizes and re-encodes on request. <b>Never serve an original</b>; never store four sizes of the same photo.</dd></div>
+      <div class="row"><dt>Analytics</dt><dd><b>Never one database row per page view.</b> Count at the edge, aggregate per minute, land it in a columnar store. This is the first thing that breaks if it is got wrong.</dd></div>
+      <div class="row"><dt>Assistants</dt><dd>Embeddings per knowledge passage in <code>pgvector</code> while volumes are small; a dedicated vector store past roughly 50M vectors. <b>Cache answers by profile and normalised question</b> — the same handful of questions arrive over and over.</dd></div>
+    </dl>
+  </section>
+
+  <!-- 4 ── stack: core -->
+  <section class="slide">
+    <span class="eyebrow">Recommended stack · Core</span>
+    <h2 class="title">What the product is actually built on.</h2>
+    <div class="stack">
+      <div class="pick"><span class="layer">Framework</span><span class="body"><b>Next.js · App Router</b><p><em>Why:</em> per-profile static generation with on-demand revalidation is the single feature this architecture leans on hardest. Server components keep the public page light while the editor stays fully client-side. The demo already runs on it.</p></span></div>
+      <div class="pick"><span class="layer">Language</span><span class="body"><b>TypeScript, strict</b><p>The block registry, props and content model are all typed end to end. This is what makes 41 block types maintainable by a small team.</p></span></div>
+      <div class="pick"><span class="layer">Hosting</span><span class="body"><b>Vercel → Cloudflare in front</b><p>Vercel for the tightest Next integration and preview deploys. Cloudflare in front for custom domains, WAF and caching control — and as the exit path if egress pricing bites at Phase 2.</p></span></div>
+      <div class="pick"><span class="layer">Database</span><span class="body"><b>PostgreSQL — Neon, then Aurora</b><p>Relational profiles, JSONB blocks, row-level security for tenancy and <code>pgvector</code> for embeddings, all in one engine. Neon's branching gives every pull request a real database.</p></span></div>
+      <div class="pick"><span class="layer">Data access</span><span class="body"><b>Drizzle ORM</b><p>SQL-first with real TypeScript inference and a tiny runtime that works at the edge. Prisma is the safe alternative; its heavier client is the reason it is second here.</p></span></div>
+      <div class="pick"><span class="layer">Auth</span><span class="body"><b>Clerk</b><p>Organisations map cleanly onto "a profile is a tenant", and it ships MFA and user management rather than us building them. Auth.js is the no-vendor fallback if that matters more than speed.</p></span></div>
+      <div class="pick"><span class="layer">Storage &amp; media</span><span class="body"><b>Cloudflare R2 + Images</b><p><em>Zero egress fees.</em> At 50TB of galleries served hundreds of millions of times, egress is the decisive line on the bill — this one choice is worth more than every other cost optimisation combined.</p></span></div>
+      <div class="pick"><span class="layer">Styling</span><span class="body"><b>Tailwind + CSS variables</b><p>Already proven in the demo: a template swap repaints the public page, the editor and the admin by changing variables, with no per-component theming.</p></span></div>
+    </div>
+  </section>
+
+  <!-- 5 ── stack: services -->
+  <section class="slide">
+    <span class="eyebrow">Recommended stack · Services</span>
+    <h2 class="title">Everything the page does not render itself.</h2>
+    <div class="stack">
+      <div class="pick"><span class="layer">Cache &amp; limits</span><span class="body"><b>Upstash Redis</b><p>Serverless, HTTP-addressable so it works from the edge. Holds hot profile metadata, rate limits and the assistant answer cache.</p></span></div>
+      <div class="pick"><span class="layer">Background jobs</span><span class="body"><b>Inngest</b><p>Durable, TypeScript-native, with retries and observability built in. Email, SMS, embedding jobs and analytics roll-ups all belong here — nothing a visitor waits on should call a third party in the request path.</p></span></div>
+      <div class="pick"><span class="layer">Email &amp; SMS</span><span class="body"><b>Resend + MSG91</b><p>Resend for transactional email with React templates. MSG91 for Indian SMS, where it is materially cheaper than Twilio; Twilio for international.</p></span></div>
+      <div class="pick"><span class="layer">Payments</span><span class="body"><b>Razorpay, then Stripe</b><p>Razorpay first for UPI, which the product already assumes. Stripe for international subscriptions. Split payouts if the platform ever takes a cut of customer bookings.</p></span></div>
+      <div class="pick"><span class="layer">Analytics</span><span class="body"><b>Tinybird + PostHog</b><p>Tinybird (managed ClickHouse) ingests page-view and click events straight from the edge and serves the dashboard charts. PostHog for product analytics on the editor itself — where people drop out of onboarding.</p></span></div>
+      <div class="pick"><span class="layer">AI</span><span class="body"><b>Small embeddings + a routed LLM</b><p>An inexpensive embedding model over knowledge passages; a small fast model for synthesis, behind a gateway so it can be swapped. Keep the demo's honest fallback: below a confidence threshold, say so and offer a booking.</p></span></div>
+      <div class="pick"><span class="layer">Custom domains</span><span class="body"><b>Cloudflare for SaaS</b><p>Certificate issuance and renewal per customer domain through one API call, instead of running ACME ourselves.</p></span></div>
+      <div class="pick"><span class="layer">Quality</span><span class="body"><b>Playwright + Vitest + Sentry</b><p>The demo's verification scripts are already Playwright-shaped. Sentry for errors, Checkly for synthetics against real published pages.</p></span></div>
+    </div>
+  </section>
+
+  <!-- 6 ── why not -->
+  <section class="slide">
+    <span class="eyebrow">Trade-offs</span>
+    <h2 class="title">The choices worth defending.</h2>
+    <div class="split">
+      <div class="panel">
+        <span class="chip">Considered and passed over</span>
+        <h3>Reasonable alternatives</h3>
+        <ul>
+          <li><b>Remix or plain React on Cloudflare Workers.</b> Cheaper and closer to the metal, but we would rebuild per-profile incremental rendering ourselves — the thing the whole design depends on.</li>
+          <li><b>A headless CMS.</b> Tempting for blocks, but the editor <em>is</em> the product. Outsourcing the content model means fighting someone else's opinions in the one place we differentiate.</li>
+          <li><b>MongoDB.</b> JSONB in Postgres gives the same flexibility for block props while keeping joins, transactions, row-level security and vectors in one engine.</li>
+          <li><b>A vector database on day one.</b> <code>pgvector</code> is enough until roughly 50M vectors. Adding a second datastore before it is needed buys latency and ops work, not capability.</li>
+        </ul>
+      </div>
+      <div class="panel tint">
+        <span class="chip crit">Non-negotiable</span>
+        <h3>Where flexibility costs too much</h3>
+        <ul>
+          <li><b>The public page is server-rendered and cacheable.</b> A client-side SPA would forfeit search indexing and the entire caching argument at once.</li>
+          <li><b>Block props stay schemaless.</b> A column per block field turns every new block into a migration.</li>
+          <li><b>Media egress is priced before it is built.</b> Picking storage on convenience is a decision that is unpickable at 50TB.</li>
+          <li><b>Page views never become rows.</b> Aggregate at the edge from the first deploy, not when the primary starts smoking.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 ── phases -->
+  <section class="slide">
+    <span class="eyebrow">Rollout</span>
+    <h2 class="title">Four phases, sized by team and bill.</h2>
+    <div class="phases">
+      <div class="phase" style="--fill:.25">
+        <span class="who">Phase 0 · 2 engineers</span>
+        <b>0 – 10k</b>
+        <ul>
+          <li>Next.js on Vercel, Neon, R2, Clerk</li>
+          <li>Billing, one region, no queue yet</li>
+          <li>Ship the editor and the public page</li>
+          <li>Instrument cost per page view from day one</li>
+        </ul>
+        <span class="cost">≈ $200 / mo</span>
+      </div>
+      <div class="phase" style="--fill:.45">
+        <span class="who">Phase 1 · 4–6 engineers</span>
+        <b>10k – 250k</b>
+        <ul>
+          <li>Static rendering per profile behind the CDN</li>
+          <li>Upstash, Inngest, Tinybird</li>
+          <li>Custom domains via Cloudflare for SaaS</li>
+          <li>Embeddings and the hosted assistant</li>
+        </ul>
+        <span class="cost">≈ $3k / mo</span>
+      </div>
+      <div class="phase" style="--fill:.7">
+        <span class="who">Phase 2 · 10–14 engineers</span>
+        <b>250k – 1.5M</b>
+        <ul>
+          <li>Read replicas and edge presence in three regions</li>
+          <li>Image pipeline, search, vector store split out</li>
+          <li>Abuse controls, per-plan quotas</li>
+          <li>SOC 2 and GDPR work begins</li>
+        </ul>
+        <span class="cost">≈ $20k / mo</span>
+      </div>
+      <div class="phase" style="--fill:1">
+        <span class="who">Phase 3 · 20+ engineers</span>
+        <b>1.5M – 5M</b>
+        <ul>
+          <li>Tenant sharding by hash, write locality per region</li>
+          <li>Cost engineering — hit rate is the biggest lever</li>
+          <li>On-call against a 99.95% availability target</li>
+        </ul>
+        <span class="cost">≈ $75k / mo · ~$0.015 per profile</span>
+      </div>
+    </div>
+    <p class="note">Figures are engineering estimates from the assumptions on slide 2, not measurements. Phase 0's job is to replace them with real numbers before Phase 3 depends on them.</p>
+  </section>
+
+  <!-- 8 ── breaks + decisions -->
+  <section class="slide">
+    <span class="eyebrow">Risk</span>
+    <h2 class="title">What breaks first, and what to decide now.</h2>
+    <div class="split">
+      <div class="panel">
+        <span class="chip warn">Fails in this order</span>
+        <h3>Three predictable failures</h3>
+        <ul>
+          <li><b>Analytics writes.</b> A row per view kills the primary long before traffic does. Aggregate at the edge from the first deploy.</li>
+          <li><b>Image bandwidth.</b> Unoptimised media outgrows every other line on the bill. Resize on demand, modern formats, long cache lives.</li>
+          <li><b>Model cost per answer.</b> Assistant usage scales with visitors, not customers. Cache aggressively, answer only on a confident match, cap knowledge base size per plan.</li>
+        </ul>
+      </div>
+      <div class="panel tint">
+        <h3>Decide before writing code</h3>
+        <ul>
+          <li><b>Tenancy model.</b> Shared tables with row-level security are right to roughly a million profiles — but choose the shard key now, not later.</li>
+          <li><b>The publish pipeline.</b> The contract between an edit and a purged CDN path is the core of the system; everything else is replaceable.</li>
+          <li><b>Where media lives.</b> Migrating 50TB later is a project in its own right.</li>
+          <li><b>What a page view costs.</b> Measure it in Phase 0 so Phase 3 holds no surprises.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="note">Companion document: the client-facing product walkthrough covers the 41 blocks, the editor and the admin in detail.</p>
+  </section>
+
+</div>
+
+<nav class="rail" aria-label="Slide navigation">
+  <div class="dots" id="dots"></div>
+  <span class="counter" id="counter">01 / 08</span>
+  <div class="nav">
+    <button id="prev" aria-label="Previous slide">←</button>
+    <button id="next" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script>
+  (function () {
+    var slides = Array.prototype.slice.call(document.querySelectorAll(".slide"));
+    var dotsBox = document.getElementById("dots");
+    var counter = document.getElementById("counter");
+    var prev = document.getElementById("prev");
+    var next = document.getElementById("next");
+    var index = 0;
+
+    var pad = function (n) { return String(n).padStart(2, "0"); };
+
+    slides.forEach(function (_, i) {
+      var b = document.createElement("button");
+      b.className = "dot";
+      b.type = "button";
+      b.setAttribute("aria-label", "Go to slide " + (i + 1));
+      b.addEventListener("click", function () { go(i); });
+      dotsBox.appendChild(b);
+    });
+    var dots = Array.prototype.slice.call(dotsBox.children);
+
+    function go(i, skipHash) {
+      index = Math.max(0, Math.min(slides.length - 1, i));
+      slides.forEach(function (s, n) { s.classList.toggle("is-active", n === index); });
+      dots.forEach(function (d, n) { d.setAttribute("aria-current", n === index ? "true" : "false"); });
+      counter.textContent = pad(index + 1) + " / " + pad(slides.length);
+      prev.disabled = index === 0;
+      next.disabled = index === slides.length - 1;
+      window.scrollTo(0, 0);
+      if (!skipHash) history.replaceState(null, "", "#" + (index + 1));
+    }
+
+    prev.addEventListener("click", function () { go(index - 1); });
+    next.addEventListener("click", function () { go(index + 1); });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") { e.preventDefault(); go(index + 1); }
+      else if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); go(index - 1); }
+      else if (e.key === "Home") { e.preventDefault(); go(0); }
+      else if (e.key === "End") { e.preventDefault(); go(slides.length - 1); }
+    });
+
+    var start = parseInt((location.hash || "").slice(1), 10);
+    go(isNaN(start) ? 0 : start - 1, true);
+  })();
+</script>

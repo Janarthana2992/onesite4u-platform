@@ -1,0 +1,810 @@
+<title>Inside OneSite4U</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;450;500;600&display=swap">
+
+<style>
+  :root {
+    --paper: #f6f7fb;
+    --surface: #ffffff;
+    --surface-2: #eef0f7;
+    --ink: #0c0f16;
+    --ink-2: #2b3140;
+    --slate: #5a6274;
+    --mist: #dfe3ee;
+    --mist-2: #eaedf5;
+    --indigo: #4f46e5;
+    --indigo-soft: #eceafd;
+    --signal: #0e7c7b;
+    --signal-soft: #dff1f0;
+    --amber: #a86414;
+    --amber-soft: #fbf0dd;
+
+    --dot: rgba(90, 98, 116, 0.22);
+    --shadow: 0 1px 2px rgba(12, 15, 22, .05), 0 12px 32px -18px rgba(12, 15, 22, .28);
+
+    --display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    --body: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+    --step--1: clamp(.75rem, .72rem + .15vw, .82rem);
+    --step-0: clamp(.94rem, .89rem + .22vw, 1.05rem);
+    --step-1: clamp(1.1rem, 1rem + .4vw, 1.3rem);
+    --step-2: clamp(1.4rem, 1.2rem + .8vw, 1.9rem);
+    --step-3: clamp(1.9rem, 1.5rem + 1.7vw, 3rem);
+    --step-4: clamp(2.4rem, 1.7rem + 3vw, 4.4rem);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #0a0c12;
+      --surface: #12151e;
+      --surface-2: #181c27;
+      --ink: #eef0f6;
+      --ink-2: #c3c8d6;
+      --slate: #8e97ac;
+      --mist: #242939;
+      --mist-2: #1c2130;
+      --indigo: #8b84f7;
+      --indigo-soft: #1e1d3d;
+      --signal: #4fd1c5;
+      --signal-soft: #10302f;
+      --amber: #e0a458;
+      --amber-soft: #2e2417;
+      --dot: rgba(142, 151, 172, 0.22);
+      --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 14px 36px -20px rgba(0, 0, 0, .8);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #0a0c12;
+    --surface: #12151e;
+    --surface-2: #181c27;
+    --ink: #eef0f6;
+    --ink-2: #c3c8d6;
+    --slate: #8e97ac;
+    --mist: #242939;
+    --mist-2: #1c2130;
+    --indigo: #8b84f7;
+    --indigo-soft: #1e1d3d;
+    --signal: #4fd1c5;
+    --signal-soft: #10302f;
+    --amber: #e0a458;
+    --amber-soft: #2e2417;
+    --dot: rgba(142, 151, 172, 0.22);
+    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 14px 36px -20px rgba(0, 0, 0, .8);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    background-image: radial-gradient(circle at 1px 1px, var(--dot) 1px, transparent 0);
+    background-size: 26px 26px;
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: var(--step-0);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--display);
+    font-weight: 700;
+    letter-spacing: -0.022em;
+    text-wrap: balance;
+    margin: 0;
+    line-height: 1.04;
+  }
+
+  p { margin: 0; }
+  ul { margin: 0; padding: 0; list-style: none; }
+  strong { font-weight: 600; color: var(--ink); }
+
+  /* ---------- deck shell ---------- */
+
+  .deck { position: relative; }
+
+  .slide {
+    display: none;
+    min-height: 100dvh;
+    padding: clamp(2.2rem, 4vw, 4rem) clamp(1.1rem, 4vw, 4.5rem) 5.5rem;
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+  .slide.is-active { display: flex; flex-direction: column; justify-content: center; gap: clamp(1.4rem, 2.5vw, 2.4rem); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .slide.is-active > * { animation: rise .42s cubic-bezier(.2, .7, .3, 1) both; }
+    .slide.is-active > *:nth-child(2) { animation-delay: .05s; }
+    .slide.is-active > *:nth-child(3) { animation-delay: .1s; }
+    .slide.is-active > *:nth-child(4) { animation-delay: .14s; }
+  }
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+  /* ---------- shared type ---------- */
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: var(--step--1);
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--slate);
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 1.6rem;
+    height: 2px;
+    background: var(--indigo);
+    border-radius: 2px;
+  }
+
+  .title { font-size: var(--step-3); }
+  .lede {
+    font-size: var(--step-1);
+    color: var(--ink-2);
+    max-width: 62ch;
+    line-height: 1.45;
+  }
+  .note { font-size: var(--step--1); color: var(--slate); }
+
+  /* ---------- blocks (the deck's recurring device) ---------- */
+
+  .grid { display: grid; gap: clamp(.7rem, 1.2vw, 1rem); }
+  .g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+  @media (max-width: 900px) {
+    .g3, .g4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 600px) {
+    .g2, .g3, .g4 { grid-template-columns: minmax(0, 1fr); }
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--mist);
+    border-radius: 14px;
+    padding: clamp(.9rem, 1.5vw, 1.25rem);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: .45rem;
+  }
+  .card h3 { font-size: var(--step-1); letter-spacing: -0.015em; }
+  .card p { color: var(--slate); font-size: var(--step--1); line-height: 1.5; }
+
+  .chip {
+    font-family: var(--mono);
+    font-size: .66rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--indigo);
+    background: var(--indigo-soft);
+    border-radius: 999px;
+    padding: .2rem .5rem;
+    align-self: flex-start;
+    font-weight: 500;
+  }
+  .chip.sig { color: var(--signal); background: var(--signal-soft); }
+  .chip.warn { color: var(--amber); background: var(--amber-soft); }
+
+  /* block-library group, mirroring the product */
+  .lib { display: flex; flex-direction: column; gap: .5rem; }
+  .lib-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: .5rem;
+    border-bottom: 1px solid var(--mist);
+    padding-bottom: .35rem;
+  }
+  .lib-head b { font-family: var(--display); font-size: var(--step-0); font-weight: 700; }
+  .lib-head span { font-family: var(--mono); font-size: .68rem; color: var(--slate); }
+  .tags { display: flex; flex-wrap: wrap; gap: .3rem; }
+  .tag {
+    font-size: .72rem;
+    line-height: 1.3;
+    padding: .24rem .5rem;
+    border: 1px solid var(--mist);
+    border-radius: 7px;
+    background: var(--surface);
+    color: var(--ink-2);
+    white-space: nowrap;
+  }
+
+  /* stat / figure */
+  .figs { display: flex; flex-wrap: wrap; gap: clamp(1rem, 3vw, 2.6rem); }
+  .fig { display: flex; flex-direction: column; gap: .15rem; }
+  .fig b {
+    font-family: var(--display);
+    font-size: var(--step-2);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+  }
+  .fig span { font-family: var(--mono); font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--slate); }
+  .fig.sig b { color: var(--signal); }
+
+  /* list with rule markers */
+  .rows { display: flex; flex-direction: column; }
+  .row {
+    display: grid;
+    grid-template-columns: 8.5rem minmax(0, 1fr);
+    gap: clamp(.6rem, 2vw, 1.6rem);
+    padding: .8rem 0;
+    border-top: 1px solid var(--mist);
+    align-items: start;
+  }
+  .row:last-child { border-bottom: 1px solid var(--mist); }
+  .row dt {
+    font-family: var(--mono);
+    font-size: .72rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--slate);
+    padding-top: .15rem;
+  }
+  .row dd { margin: 0; font-size: var(--step-0); color: var(--ink-2); }
+  .row dd b { color: var(--ink); }
+  @media (max-width: 640px) {
+    .row { grid-template-columns: minmax(0, 1fr); gap: .25rem; }
+  }
+
+  /* two-tone split for compare slides */
+  .split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(.8rem, 2vw, 1.4rem); }
+  @media (max-width: 780px) { .split { grid-template-columns: minmax(0, 1fr); } }
+
+  .panel {
+    border: 1px solid var(--mist);
+    border-radius: 14px;
+    padding: clamp(1rem, 1.6vw, 1.4rem);
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    gap: .7rem;
+  }
+  .panel.tint { background: var(--surface-2); }
+  .panel h3 { font-size: var(--step-1); }
+  .panel li {
+    display: flex;
+    gap: .55rem;
+    font-size: var(--step--1);
+    color: var(--ink-2);
+    line-height: 1.5;
+    padding: .28rem 0;
+  }
+  .panel li::before {
+    content: "";
+    flex: none;
+    width: 5px; height: 5px;
+    border-radius: 2px;
+    background: var(--indigo);
+    margin-top: .52rem;
+  }
+  .panel.tint li::before { background: var(--slate); }
+
+  /* phase ladder for the scale slide */
+  .phases { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .7rem; }
+  @media (max-width: 900px) { .phases { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 560px) { .phases { grid-template-columns: minmax(0, 1fr); } }
+  .phase {
+    border: 1px solid var(--mist);
+    border-radius: 14px;
+    background: var(--surface);
+    padding: clamp(.8rem, 1.3vw, 1.1rem);
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .phase::before {
+    content: "";
+    position: absolute; inset: 0 0 auto 0;
+    height: 3px;
+    background: var(--indigo);
+    opacity: var(--fill, .25);
+  }
+  .phase .who { font-family: var(--mono); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--slate); }
+  .phase b { font-family: var(--display); font-size: var(--step-1); font-weight: 700; letter-spacing: -.02em; }
+  .phase ul { display: flex; flex-direction: column; gap: .25rem; margin-top: .1rem; }
+  .phase li { font-size: .78rem; color: var(--slate); line-height: 1.45; }
+  .phase .cost {
+    margin-top: auto;
+    padding-top: .55rem;
+    border-top: 1px solid var(--mist);
+    font-family: var(--mono);
+    font-size: .74rem;
+    color: var(--ink-2);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* cover */
+  .cover-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    font-family: var(--mono);
+    font-size: .74rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--slate);
+  }
+  .cover-mark i {
+    width: 26px; height: 26px;
+    border-radius: 7px;
+    background: var(--indigo);
+    display: grid; place-items: center;
+    color: #fff;
+    font-style: normal;
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: .8rem;
+  }
+  .cover h1 { font-size: var(--step-4); font-weight: 800; letter-spacing: -0.035em; }
+  .cover .meta {
+    display: flex; flex-wrap: wrap;
+    gap: .5rem 1.6rem;
+    font-family: var(--mono);
+    font-size: .74rem;
+    color: var(--slate);
+    border-top: 1px solid var(--mist);
+    padding-top: 1rem;
+  }
+
+  /* flow strip (booking / request lifecycle) */
+  .flow { display: flex; flex-wrap: wrap; gap: .4rem; align-items: stretch; }
+  .step {
+    flex: 1 1 8rem;
+    border: 1px solid var(--mist);
+    border-radius: 11px;
+    background: var(--surface);
+    padding: .65rem .7rem;
+    display: flex; flex-direction: column; gap: .2rem;
+  }
+  .step em {
+    font-family: var(--mono);
+    font-style: normal;
+    font-size: .66rem;
+    color: var(--indigo);
+    letter-spacing: .08em;
+  }
+  .step span { font-size: .8rem; color: var(--ink-2); line-height: 1.35; }
+
+  /* ---------- chrome ---------- */
+
+  .rail {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: .6rem clamp(1rem, 4vw, 2.2rem);
+    background: color-mix(in srgb, var(--paper) 86%, transparent);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--mist);
+  }
+  .dots { display: flex; gap: 5px; flex: 1; flex-wrap: wrap; }
+  .dot {
+    width: 20px; height: 5px;
+    border-radius: 3px;
+    border: 0;
+    padding: 0;
+    background: var(--mist);
+    cursor: pointer;
+    transition: background .18s ease, transform .18s ease;
+  }
+  .dot:hover { background: var(--slate); }
+  .dot[aria-current="true"] { background: var(--indigo); transform: scaleY(1.5); }
+  .dot:focus-visible { outline: 2px solid var(--indigo); outline-offset: 3px; }
+
+  .counter {
+    font-family: var(--mono);
+    font-size: .74rem;
+    color: var(--slate);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .nav { display: flex; gap: .35rem; }
+  .nav button {
+    font-family: var(--mono);
+    font-size: .8rem;
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    border: 1px solid var(--mist);
+    background: var(--surface);
+    color: var(--ink-2);
+    cursor: pointer;
+    line-height: 1;
+  }
+  .nav button:hover { border-color: var(--indigo); color: var(--indigo); }
+  .nav button:disabled { opacity: .35; cursor: default; }
+  .nav button:focus-visible { outline: 2px solid var(--indigo); outline-offset: 2px; }
+
+  @media (max-width: 620px) { .dots { display: none; } .rail { justify-content: space-between; } }
+</style>
+
+<div class="deck" id="deck">
+
+  <!-- 1 ───────────────────────────────── cover -->
+  <section class="slide cover">
+    <span class="cover-mark"><i>1S</i> OneSite4U · Product review</span>
+    <h1>One link.<br>Your entire business.</h1>
+    <p class="lede">A working demo of a platform where any professional assembles a public page from blocks, edits it on a live canvas, and runs the enquiries it generates — without touching a template or a line of code.</p>
+    <div class="meta">
+      <span>41 blocks</span>
+      <span>3 surfaces</span>
+      <span>4 example professions</span>
+      <span>Runs today, no backend</span>
+    </div>
+  </section>
+
+  <!-- 2 ───────────────────────────────── problem -->
+  <section class="slide">
+    <span class="eyebrow">The problem</span>
+    <h2 class="title">Five tools, five bills, no single page.</h2>
+    <p class="lede">A consultant sends a Linktree for links, a Calendly for meetings, a Google Form for enquiries, a WhatsApp number for everything urgent and a PDF brochure over email. Nothing shares an address, a look, or a record of who got in touch.</p>
+    <div class="grid g4">
+      <div class="card"><span class="chip">Scattered</span><h3>No single address</h3><p>The link you hand out depends on what you happen to want that day.</p></div>
+      <div class="card"><span class="chip">Generic</span><h3>Looks like everyone</h3><p>Link-in-bio tools give every profession the same stack of grey buttons.</p></div>
+      <div class="card"><span class="chip">Leaky</span><h3>Enquiries get lost</h3><p>Forms land in an inbox; nobody knows what is open or answered.</p></div>
+      <div class="card"><span class="chip">Manual</span><h3>Same questions daily</h3><p>Pricing, timings and process get retyped by hand, forever.</p></div>
+    </div>
+  </section>
+
+  <!-- 3 ───────────────────────────────── the idea -->
+  <section class="slide">
+    <span class="eyebrow">The idea</span>
+    <h2 class="title">One page, assembled from blocks.</h2>
+    <p class="lede">Nothing in the product is tied to an industry. A page is an ordered list of blocks, each holding its own content and wording — so a photographer, a doctor and an elected representative build genuinely different pages out of the same parts.</p>
+    <div class="grid g3">
+      <div class="card"><span class="chip">Surface 01</span><h3>The public page</h3><p>What visitors see. A mobile app view below 1024px, a full desktop web page above it, from one source of truth.</p></div>
+      <div class="card"><span class="chip">Surface 02</span><h3>The page editor</h3><p>A canvas where blocks are dragged in, arranged and edited in place, previewed on six device frames.</p></div>
+      <div class="card"><span class="chip">Surface 03</span><h3>The admin</h3><p>Content, enquiries and analytics — with only the tools the page actually uses.</p></div>
+    </div>
+  </section>
+
+  <!-- 4 ───────────────────────────────── public page -->
+  <section class="slide">
+    <span class="eyebrow">Surface 01 · The public page</span>
+    <h2 class="title">Two layouts, one source of truth.</h2>
+    <div class="split">
+      <div class="panel">
+        <span class="chip">Under 1024px</span>
+        <h3>Mobile app view</h3>
+        <ul>
+          <li>Cover banner with an overlapping avatar, verified mark and status chip</li>
+          <li>Call, WhatsApp, Email and Save Contact — the last downloads a real vCard</li>
+          <li>Sticky bottom navigation that adapts to the blocks on the page</li>
+          <li>Sections reveal as they scroll into view, and never wait on an animation to become readable</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <span class="chip">1024px and up</span>
+        <h3>Desktop web page</h3>
+        <ul>
+          <li>Sticky top navbar with section anchors and a Book Appointment call to action</li>
+          <li>Full-bleed hero, then a sticky sidebar holding identity, contact actions and a QR share card</li>
+          <li>Links, services and openings lay out in two columns; the gallery in three</li>
+          <li>Same blocks, same order, same content — chosen by layout, not duplicated</li>
+        </ul>
+      </div>
+    </div>
+    <p class="note">Verified at 390, 768, 1024, 1440 and 1920px: correct layout at each, no horizontal overflow, no console errors.</p>
+  </section>
+
+  <!-- 5 ───────────────────────────────── the catalogue -->
+  <section class="slide">
+    <span class="eyebrow">The catalogue</span>
+    <h2 class="title">41 blocks, in seven groups.</h2>
+    <div class="grid g4">
+      <div class="lib">
+        <div class="lib-head"><b>Basics</b><span>6</span></div>
+        <div class="tags"><span class="tag">Contact info</span><span class="tag">Link buttons</span><span class="tag">Social icons</span><span class="tag">Opening hours</span><span class="tag">Location map</span><span class="tag">Contact form</span></div>
+      </div>
+      <div class="lib">
+        <div class="lib-head"><b>About</b><span>11</span></div>
+        <div class="tags"><span class="tag">Text</span><span class="tag">Heading</span><span class="tag">Image + text</span><span class="tag">Quote</span><span class="tag">Experience</span><span class="tag">Education</span><span class="tag">Skills</span><span class="tag">Awards</span><span class="tag">Certifications</span><span class="tag">Team</span><span class="tag">Numbers</span></div>
+      </div>
+      <div class="lib">
+        <div class="lib-head"><b>Offerings</b><span>7</span></div>
+        <div class="tags"><span class="tag">Services</span><span class="tag">Pricing table</span><span class="tag">Products</span><span class="tag">Menu / price list</span><span class="tag">Downloads</span><span class="tag">Schedule</span><span class="tag">Progress tracker</span></div>
+      </div>
+      <div class="lib">
+        <div class="lib-head"><b>Trust</b><span>2</span></div>
+        <div class="tags"><span class="tag">Reviews</span><span class="tag">Logo wall</span></div>
+      </div>
+      <div class="lib">
+        <div class="lib-head"><b>Media</b><span>4</span></div>
+        <div class="tags"><span class="tag">Photo gallery</span><span class="tag">Video</span><span class="tag">Link preview</span><span class="tag">Announcements</span></div>
+      </div>
+      <div class="lib">
+        <div class="lib-head"><b>Engage</b><span>10</span></div>
+        <div class="tags"><span class="tag">AI assistant</span><span class="tag">Request desk</span><span class="tag">Event</span><span class="tag">Openings</span><span class="tag">Newsletter</span><span class="tag">Call to action</span><span class="tag">Poll</span><span class="tag">Support / tip</span><span class="tag">Countdown</span><span class="tag">FAQ</span></div>
+      </div>
+      <div class="lib">
+        <div class="lib-head"><b>Layout</b><span>1</span></div>
+        <div class="tags"><span class="tag">Divider</span></div>
+      </div>
+      <div class="card" style="background:var(--surface-2)">
+        <span class="chip">Rules</span>
+        <p><b>Most blocks repeat</b> — three text blocks, two FAQs, a pricing table per service line. Blocks backed by a shared collection appear once.</p>
+        <p><b>Every block renames.</b> "Services" becomes "Meet your MLA" or "Apprenticeships"; headings, anchors and the mobile tab all follow.</p>
+        <p><b>Empty blocks disappear</b> from the live page and are flagged in the editor.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 ───────────────────────────────── professions -->
+  <section class="slide">
+    <span class="eyebrow">Not industry-locked</span>
+    <h2 class="title">Same blocks. Four very different pages.</h2>
+    <div class="grid g4">
+      <div class="card">
+        <span class="chip">Advisory</span>
+        <h3>Financial consultant</h3>
+        <p>Paid services, a booking calendar, testimonials and a numbers strip.</p>
+        <p class="note"><b>Leans on</b> Services · AI assistant · Reviews · Numbers</p>
+      </div>
+      <div class="card">
+        <span class="chip">Creative</span>
+        <h3>Wedding photographer</h3>
+        <p>Portfolio first, packages from ₹30k to ₹1.85L, a film, and a booking calendar rendered as a progress tracker — “Fully booked”, “2 dates left”.</p>
+        <p class="note"><b>Leans on</b> Gallery · Pricing · Video · Progress</p>
+      </div>
+      <div class="card">
+        <span class="chip">Wellness</span>
+        <h3>Yoga studio</h3>
+        <p>Opening hours, a weekday timetable, three passes with no lock-in, a teaching team and a map.</p>
+        <p class="note"><b>Leans on</b> Hours · Schedule · Menu · Team</p>
+      </div>
+      <div class="card">
+        <span class="chip">Professional</span>
+        <h3>Advocate</h3>
+        <p>Bar enrolment and credentials, education, a document library, and an intake desk that states plainly it creates no advocate–client relationship.</p>
+        <p class="note"><b>Leans on</b> Certifications · Requests · FAQ · Downloads</p>
+      </div>
+    </div>
+    <p class="note">Each example ships with its own profile, services, reviews, knowledge base, template and page order. Loading one is identical to building from scratch — nothing is locked.</p>
+  </section>
+
+  <!-- 7 ───────────────────────────────── canvas editor -->
+  <section class="slide">
+    <span class="eyebrow">Surface 02 · The page editor</span>
+    <h2 class="title">Built like a design tool, not a settings form.</h2>
+    <div class="split">
+      <div class="panel">
+        <h3>Drag and drop that behaves</h3>
+        <ul>
+          <li>Every block in the library is a tile with a miniature of its own layout — rows, grids, columns, a chat bubble, a map pin</li>
+          <li>A ghost card follows the cursor; a drop line with a label tracks where it will land</li>
+          <li>The canvas auto-scrolls near its edges, and the whole thing runs on pointer events, so it works on touch</li>
+          <li>Filter by category or search all 41</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>Edit on the page</h3>
+        <ul>
+          <li>Click any heading or subtitle on the canvas and type — the nav and mobile tab update with it</li>
+          <li>Hover a block for its toolbar: move, duplicate, hide, delete</li>
+          <li>Properties panel carries every option, with add / reorder / remove rows for list blocks</li>
+          <li>Undo and redo across every change — ⌘Z, ⇧⌘Z, Delete to remove, Esc to deselect</li>
+        </ul>
+      </div>
+    </div>
+    <div class="figs">
+      <div class="fig"><b>6</b><span>Device frames</span></div>
+      <div class="fig"><b>41</b><span>Draggable tiles</span></div>
+      <div class="fig"><b>60</b><span>Undo steps</span></div>
+      <div class="fig"><b>0</b><span>Code required</span></div>
+    </div>
+  </section>
+
+  <!-- 8 ───────────────────────────────── live editor -->
+  <section class="slide">
+    <span class="eyebrow">Surface 02 · Live editor</span>
+    <h2 class="title">Three panes: outline, fields, live preview.</h2>
+    <dl class="rows">
+      <div class="row"><dt>Left</dt><dd><b>Layout, theme and type.</b> Every section with a drag handle, eye and delete, plus Add custom section. Beneath it the current colour with twelve presets, a font pairing picker, and sliders for line height and base font size that retype the preview as you drag.</dd></div>
+      <div class="row"><dt>Middle</dt><dd><b>Field by field.</b> Avatar with left, centre and right alignment, then one row per field — name, title, tagline, status chip, organisation, numbers, phone, email, website, location. Each drags to reorder, hides, deletes and edits inline. Removed rows return from a chip list.</dd></div>
+      <div class="row"><dt>Right</dt><dd><b>An editable preview.</b> Zoom out, in, fit-width, and a desktop / mobile toggle. Click the name, title or tagline and type straight onto the preview; hover the avatar for a picker with presets, a URL field, or an upload from the device.</dd></div>
+    </dl>
+  </section>
+
+  <!-- 9 ───────────────────────────────── design system -->
+  <section class="slide">
+    <span class="eyebrow">Appearance</span>
+    <h2 class="title">One tap restyles every screen.</h2>
+    <p class="lede">Theming runs on CSS variables wired into the build, so a template change repaints the public page, the editor preview and the admin at once — no per-component styling.</p>
+    <div class="grid g3">
+      <div class="card"><span class="chip">7</span><h3>UI templates</h3><p>Indigo Pro, Sunset Bold, Editorial, Ocean Calm, Forest, Mono Minimal, Rose Luxe — each swapping colour, type, corners, banner and card style together.</p></div>
+      <div class="card"><span class="chip">12 + 12</span><h3>Colour palettes</h3><p>Primary and accent chosen separately, with a live gradient preview.</p></div>
+      <div class="card"><span class="chip">7</span><h3>Font pairings</h3><p>Plus Jakarta, Playfair, Poppins, Space Grotesk, DM Serif, Sora and JetBrains Mono, each previewed in its own face.</p></div>
+      <div class="card"><span class="chip">10</span><h3>Cover banners</h3><p>Six generated covers and four photographic ones, or no banner at all.</p></div>
+      <div class="card"><span class="chip">Layout</span><h3>Shape and density</h3><p>Three corner radii, four card styles, three button shapes, plus line height and base size.</p></div>
+      <div class="card"><span class="chip">Both</span><h3>Light and dark</h3><p>Every surface designed in both, following the visitor's system setting or an explicit toggle.</p></div>
+    </div>
+  </section>
+
+  <!-- 10 ───────────────────────────────── conversion -->
+  <section class="slide">
+    <span class="eyebrow">Turning visits into work</span>
+    <h2 class="title">Five paths from reading to contact.</h2>
+    <div class="flow">
+      <div class="step"><em>01</em><span>Pick a service</span></div>
+      <div class="step"><em>02</em><span>Choose a date on the calendar</span></div>
+      <div class="step"><em>03</em><span>Pick a free slot</span></div>
+      <div class="step"><em>04</em><span>Enter details</span></div>
+      <div class="step"><em>05</em><span>Confirmed, with a summary and calendar add</span></div>
+    </div>
+    <div class="grid g4">
+      <div class="card"><span class="chip">Bookings</span><h3>Appointments</h3><p>Month calendar with past days and closed days disabled, slots that show as already taken, and a confirmation with the meeting link.</p></div>
+      <div class="card"><span class="chip">Events</span><h3>RSVP</h3><p>Form to a numbered e-ticket, with an add-to-calendar action.</p></div>
+      <div class="card"><span class="chip">Hiring</span><h3>Applications</h3><p>Jobs, volunteering or apprenticeships, with a résumé upload and a tracked applicant count.</p></div>
+      <div class="card"><span class="chip">Requests</span><h3>Intake desk</h3><p>Your own categories, a stated response promise and a safety note. Every submission gets a reference number and lands in an admin inbox filtered by status.</p></div>
+    </div>
+    <p class="note">The newsletter block completes the set — and its subscriber list only appears in the admin when the block is on the page.</p>
+  </section>
+
+  <!-- 11 ───────────────────────────────── AI -->
+  <section class="slide">
+    <span class="eyebrow">Assistants</span>
+    <h2 class="title">Two assistants. One faces visitors, one faces you.</h2>
+    <div class="grid g3">
+      <div class="card">
+        <span class="chip">Public</span>
+        <h3>Answers from your own words</h3>
+        <p>The visitor assistant retrieves from a knowledge base you write, quotes the passages that match, and cites which entries it used. Below a confidence threshold it says it does not know and offers a booking instead of inventing an answer.</p>
+      </div>
+      <div class="card">
+        <span class="chip">Public</span>
+        <h3>Fed by documents</h3>
+        <p>Drop in notes, FAQs or policies. Text formats are read, split into passages and tagged automatically; each document is listed with its entry count and removable in one click. A retrieval tester shows exactly what a visitor would get.</p>
+      </div>
+      <div class="card">
+        <span class="chip sig">Owner only</span>
+        <h3>Ask about your account</h3>
+        <p>A private assistant that reads your live figures: views and your best day, click rate with strongest and weakest link, bookings with their value and conversion, open requests by category, and which blocks are not showing and why.</p>
+      </div>
+    </div>
+    <p class="note">In the demo, retrieval and answering run entirely in the browser — no API key, no external service, nothing leaving the page.</p>
+  </section>
+
+  <!-- 12 ───────────────────────────────── adaptive admin -->
+  <section class="slide">
+    <span class="eyebrow">Surface 03 · The admin</span>
+    <h2 class="title">The dashboard only shows tools you use.</h2>
+    <p class="lede">Every tab is gated on a block being present. No Services block, no Appointments tab. Add a Request desk and Requests appears the moment you return. What is missing is listed, with the block that unlocks it.</p>
+    <div class="split">
+      <div class="panel">
+        <h3>Always available</h3>
+        <ul>
+          <li><b>Overview</b> — views, clicks, bookings and subscribers, a seven-day chart, and the live/hidden/empty state of every block</li>
+          <li><b>Profile</b> — identity, contact and page settings, as its own section</li>
+          <li><b>Ask about my account</b> — the private assistant</li>
+          <li><b>Live editor</b> and <b>Design &amp; blocks</b></li>
+          <li><b>Example profiles</b> — four finished pages to explore</li>
+        </ul>
+      </div>
+      <div class="panel tint">
+        <h3>Unlocked by a block</h3>
+        <ul>
+          <li><b>Links, Services, Experience, Reviews, Clients, Progress, Gallery, Events, Jobs</b> — content for the matching block</li>
+          <li><b>Appointments</b> — needs Services</li>
+          <li><b>Requests</b> — needs the Request desk</li>
+          <li><b>Subscribers</b> — needs the Newsletter</li>
+          <li><b>Knowledge base</b> — needs the AI assistant</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 ───────────────────────────────── honest slide -->
+  <section class="slide">
+    <span class="eyebrow">Where the demo stands</span>
+    <h2 class="title">What is real today, and what comes next.</h2>
+    <div class="split">
+      <div class="panel">
+        <h3>Working now</h3>
+        <ul>
+          <li>Every screen, block and flow described here, running in the browser</li>
+          <li>Edits in the admin appear on the public page immediately; layout and design persist between visits</li>
+          <li>Retrieval, document ingestion and both assistants run locally</li>
+          <li>vCard download and Web Share are genuinely real</li>
+        </ul>
+      </div>
+      <div class="panel tint">
+        <span class="chip warn">To build</span>
+        <h3>For production</h3>
+        <ul>
+          <li>Accounts, authentication and a database in place of browser storage</li>
+          <li>Real email and SMS for confirmations; payments for paid bookings</li>
+          <li>Hosted embeddings and a language model for the assistants</li>
+          <li>File storage for images and documents; custom domains per profile</li>
+          <li>An analytics pipeline behind the numbers on the dashboard</li>
+        </ul>
+      </div>
+    </div>
+    <p class="note">Nothing in the demo pretends to be connected. Forms simulate a request and say so; the assistants explain that they answer from a local knowledge base.</p>
+  </section>
+
+  <!-- 14 ───────────────────────────────── close -->
+  <section class="slide cover">
+    <span class="eyebrow">In short</span>
+    <h2 class="title">A page builder anyone can operate.</h2>
+    <p class="lede">The demo runs today at <span style="font-family:var(--mono);font-size:.9em">localhost:3000</span> — the public page, the editor at <span style="font-family:var(--mono);font-size:.9em">/webview</span>, and the dashboard at <span style="font-family:var(--mono);font-size:.9em">/admin</span>. Four example professions are one click apart.</p>
+    <div class="figs">
+      <div class="fig"><b>41</b><span>Blocks</span></div>
+      <div class="fig"><b>7</b><span>Templates</span></div>
+      <div class="fig"><b>4</b><span>Example professions</span></div>
+      <div class="fig"><b>3</b><span>Surfaces</span></div>
+      <div class="fig sig"><b>5M</b><span>Profiles, planned for</span></div>
+    </div>
+    <p class="note">The architecture and technology choices behind that last figure are covered in the companion engineering plan.</p>
+  </section>
+
+</div>
+
+<nav class="rail" aria-label="Slide navigation">
+  <div class="dots" id="dots"></div>
+  <span class="counter" id="counter">01 / 14</span>
+  <div class="nav">
+    <button id="prev" aria-label="Previous slide">←</button>
+    <button id="next" aria-label="Next slide">→</button>
+  </div>
+</nav>
+
+<script>
+  (function () {
+    var slides = Array.prototype.slice.call(document.querySelectorAll(".slide"));
+    var dotsBox = document.getElementById("dots");
+    var counter = document.getElementById("counter");
+    var prev = document.getElementById("prev");
+    var next = document.getElementById("next");
+    var index = 0;
+
+    var pad = function (n) { return String(n).padStart(2, "0"); };
+
+    slides.forEach(function (_, i) {
+      var b = document.createElement("button");
+      b.className = "dot";
+      b.type = "button";
+      b.setAttribute("aria-label", "Go to slide " + (i + 1));
+      b.addEventListener("click", function () { go(i); });
+      dotsBox.appendChild(b);
+    });
+    var dots = Array.prototype.slice.call(dotsBox.children);
+
+    function go(i, skipHash) {
+      index = Math.max(0, Math.min(slides.length - 1, i));
+      slides.forEach(function (s, n) { s.classList.toggle("is-active", n === index); });
+      dots.forEach(function (d, n) { d.setAttribute("aria-current", n === index ? "true" : "false"); });
+      counter.textContent = pad(index + 1) + " / " + pad(slides.length);
+      prev.disabled = index === 0;
+      next.disabled = index === slides.length - 1;
+      window.scrollTo(0, 0);
+      if (!skipHash) history.replaceState(null, "", "#" + (index + 1));
+    }
+
+    prev.addEventListener("click", function () { go(index - 1); });
+    next.addEventListener("click", function () { go(index + 1); });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") { e.preventDefault(); go(index + 1); }
+      else if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); go(index - 1); }
+      else if (e.key === "Home") { e.preventDefault(); go(0); }
+      else if (e.key === "End") { e.preventDefault(); go(slides.length - 1); }
+    });
+
+    var start = parseInt((location.hash || "").slice(1), 10);
+    go(isNaN(start) ? 0 : start - 1, true);
+  })();
+</script>
