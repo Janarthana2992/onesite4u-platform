@@ -51,6 +51,7 @@ import {
   type LinkIcon,
 } from "@/data/mock";
 import { getDef } from "@/data/blocks";
+import { SITE_HOST } from "@/lib/site";
 import { blockHasContent } from "@/components/profile-view";
 import { Button, Card, Field, Input, Sheet, Switch, Textarea, cn } from "@/components/ui";
 import { LinkIconBadge } from "@/components/profile-sections";
@@ -775,7 +776,7 @@ function ProfileTab({ wide }: { wide: boolean }) {
               <div className="min-w-0 flex-1">
                 <p className="truncate font-semibold">{profile.name}</p>
                 <p className="truncate text-xs text-slate-500 dark:text-zinc-400">
-                  onesite4u.com/{profile.handle}
+                  {SITE_HOST}
                 </p>
                 <div className="mt-1.5 flex gap-2">
                   <button

@@ -33,6 +33,7 @@ import { Customizer } from "@/components/customizer";
 import { BlockLibrary, EditorProvider, PropertiesPanel, useEditor } from "@/components/editor";
 import { DesignScope, ScrollScopeProvider } from "@/components/design-store";
 import { useContent } from "@/components/content-store";
+import { ADMIN_PATH, SITE_HOST } from "@/lib/site";
 import { useTheme, useToast } from "@/components/providers";
 import { cn } from "@/components/ui";
 import { useDesign } from "@/components/design-store";
@@ -82,7 +83,7 @@ function Studio() {
 
   const { profile } = content;
   const device = DEVICES.find((d) => d.id === deviceId) ?? DEVICES[0];
-  const url = route === "profile" ? `onesite4u.com/${profile.handle}` : `onesite4u.com/${profile.handle}/admin`;
+  const url = route === "profile" ? SITE_HOST : ADMIN_PATH;
   const editing = route === "profile";
 
   useEffect(() => {
