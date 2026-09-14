@@ -40,7 +40,7 @@ import { DesignScope, useDesign } from "@/components/design-store";
 import { useContent } from "@/components/content-store";
 import { useMediaQuery } from "@/lib/hooks";
 import { ProfileQr } from "@/components/qr-code";
-import { profileLabel } from "@/lib/site";
+import { profileLabel, profileUrl } from "@/lib/site";
 import { Reveal } from "@/components/reveal";
 
 export type ProfileVariant = "auto" | "mobile" | "web";
@@ -59,6 +59,7 @@ export function ProfileView({
   const { content } = useContent();
   const editor = useEditor();
   const { profile } = content;
+  const shareUrl = profileUrl(profile.handle);
   const isDesktopViewport = useMediaQuery("(min-width: 1024px)");
   const wide = variant === "web" || (variant === "auto" && isDesktopViewport);
 
@@ -72,14 +73,14 @@ export function ProfileView({
   const openBooking = (service: Service | null = null) => setBooking({ open: true, service });
 
   const share = async () => {
-    const data = { title: profile.name, text: profile.title, url: profile.url };
+    const data = { title: profile.name, text: profile.title, url: shareUrl };
     if (typeof navigator !== "undefined" && navigator.share) {
       try {
         await navigator.share(data);
         return;
       } catch {}
     }
-    navigator.clipboard?.writeText(profile.url).catch(() => {});
+    navigator.clipboard?.writeText(shareUrl).catch(() => {});
     toast("Profile link copied to clipboard");
   };
 
@@ -190,14 +191,14 @@ export function ProfileView({
               </Button>
               <Card className="p-4">
                 <div className="flex items-center gap-3">
-                  <div className="shrink-0 rounded-lg bg-white p-1 shadow-sm dark:bg-white"><ProfileQr size={64} value={profile.url} /></div>
+                  <div className="shrink-0 rounded-lg bg-white p-1 shadow-sm dark:bg-white"><ProfileQr size={64} value={shareUrl} /></div>
                   <div className="min-w-0">
                     <p className="text-sm font-semibold">Share this profile</p>
                     <p className="truncate text-xs text-slate-500 dark:text-zinc-400">{profileLabel(profile.handle)}</p>
                   </div>
                 </div>
                 <div className="mt-3 grid grid-cols-2 gap-2">
-                  <Button size="sm" variant="outline" onClick={() => { navigator.clipboard?.writeText(profile.url).catch(() => {}); toast("Link copied"); }}>
+                  <Button size="sm" variant="outline" onClick={() => { navigator.clipboard?.writeText(shareUrl).catch(() => {}); toast("Link copied"); }}>
                     <Copy size={14} /> Copy
                   </Button>
                   <Button size="sm" variant="outline" onClick={() => setQrOpen(true)}><QrCode size={14} /> QR</Button>

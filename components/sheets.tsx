@@ -21,7 +21,7 @@ import { Button, Field, Input, Sheet, SuccessState, Textarea, cn } from "@/compo
 import { useToast } from "@/components/providers";
 import { useFakeSubmit } from "@/lib/hooks";
 import { ProfileQr } from "@/components/qr-code";
-import { profileLabel } from "@/lib/site";
+import { profileLabel, profileUrl } from "@/lib/site";
 
 /* ======================= Booking ======================= */
 
@@ -509,11 +509,12 @@ export function QrSheet({ open, onClose }: { open: boolean; onClose: () => void 
   const { toast } = useToast();
   const { content } = useContent();
   const { profile } = content;
+  const shareUrl = profileUrl(profile.handle);
   const share = () => {
     if (typeof navigator !== "undefined" && navigator.share) {
-      navigator.share({ title: profile.name, text: profile.title, url: profile.url }).catch(() => {});
+      navigator.share({ title: profile.name, text: profile.title, url: shareUrl }).catch(() => {});
     } else {
-      navigator.clipboard?.writeText(profile.url).catch(() => {});
+      navigator.clipboard?.writeText(shareUrl).catch(() => {});
       toast("Link copied · share it anywhere");
     }
   };
@@ -522,7 +523,7 @@ export function QrSheet({ open, onClose }: { open: boolean; onClose: () => void 
       <div className="flex flex-col items-center">
         <div className="rounded-3xl bg-gradient-to-br from-brand-600 to-violet-600 p-1 shadow-xl shadow-brand-600/30">
           <div className="rounded-[20px] bg-white p-4">
-            <ProfileQr size={210} value={profile.url} />
+            <ProfileQr size={210} value={shareUrl} />
           </div>
         </div>
         <div className="mt-4 flex items-center gap-2">
@@ -539,7 +540,7 @@ export function QrSheet({ open, onClose }: { open: boolean; onClose: () => void 
           <Button
             variant="outline"
             onClick={() => {
-              navigator.clipboard?.writeText(profile.url).catch(() => {});
+              navigator.clipboard?.writeText(shareUrl).catch(() => {});
               toast("Link copied");
             }}
           >

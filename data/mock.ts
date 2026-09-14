@@ -63,8 +63,6 @@ export type Booking = {
   status: "Confirmed" | "Pending" | "Completed";
 };
 
-import { profileUrl } from "@/lib/site";
-
 export type Profile = {
   name: string;
   title: string;
@@ -77,7 +75,6 @@ export type Profile = {
   location: string;
   city: string;
   handle: string;
-  url: string;
   /** The org / party / hospital row under the headline. */
   org: { name: string; note: string; initials: string };
   stats: { a: string; b: string; c: string };
@@ -99,7 +96,6 @@ export const profile: Profile = {
   location: "T. Nagar, Chennai, Tamil Nadu",
   city: "Chennai, India",
   handle: "sheela",
-  url: profileUrl("sheela"),
   org: { name: "Octogon Mitra Investments", note: "SEBI registered · Est. 2014", initials: "OM" },
   stats: { a: "350+", b: "4.9", c: "12 yrs" },
   statLabels: { a: "Clients", b: "Rating", c: "Experience" },

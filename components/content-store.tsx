@@ -155,9 +155,14 @@ export function ContentProvider({
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
         const saved = JSON.parse(raw) as Partial<Content>;
+        // Older builds stored a `url` on the profile. It is derived from the
+        // handle now, so drop anything stale rather than let it win.
+        const { url: _staleUrl, ...savedProfile } = (saved.profile ?? {}) as Record<string, unknown>;
+        void _staleUrl;
         setContent({
           ...DEFAULT_CONTENT,
           ...saved,
+          profile: { ...DEFAULT_CONTENT.profile, ...savedProfile } as Content["profile"],
           profileFields: saved.profileFields?.length ? saved.profileFields : DEFAULT_PROFILE_FIELDS,
         });
       }

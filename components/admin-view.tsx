@@ -51,7 +51,7 @@ import {
   type LinkIcon,
 } from "@/data/mock";
 import { getDef } from "@/data/blocks";
-import { profileLabel } from "@/lib/site";
+import { profileLabel, profileUrl } from "@/lib/site";
 import { blockHasContent } from "@/components/profile-view";
 import { Button, Card, Field, Input, Sheet, Switch, Textarea, cn } from "@/components/ui";
 import { LinkIconBadge } from "@/components/profile-sections";
@@ -782,7 +782,7 @@ function ProfileTab({ wide }: { wide: boolean }) {
                   <button
                     type="button"
                     onClick={() => {
-                      navigator.clipboard?.writeText(profile.url).catch(() => {});
+                      navigator.clipboard?.writeText(profileUrl(profile.handle)).catch(() => {});
                       toast("Link copied");
                     }}
                     className="inline-flex items-center gap-1 rounded-lg bg-slate-100 px-2 py-1 text-[11px] font-medium dark:bg-zinc-800"
