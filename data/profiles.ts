@@ -570,6 +570,297 @@ const advocate: ExampleProfile = {
   },
 };
 
+
+/* ======================= 5. Sitting MLA ======================= */
+
+const mla: ExampleProfile = {
+  id: "mla",
+  name: "Revathi Arumugam",
+  field: "Sitting MLA",
+  blurb: "An elected member in office: grievance desk, promises tracker and public meeting slots.",
+  highlights: ["Request desk", "Progress tracker", "Event", "Openings"],
+  template: "forest",
+  content: {
+    profile: {
+      name: "Revathi Arumugam",
+      title: "MLA — Anna Nagar Constituency",
+      tagline: "Serving 2.4 lakh residents across 14 wards. Every grievance acknowledged within 48 hours.",
+      avatar: "https://i.pravatar.cc/300?img=44",
+      phone: "+91 98410 55500",
+      whatsapp: "919841055500",
+      email: "office@revathiarumugam.in",
+      website: "revathiarumugam.in",
+      location: "MLA Office, 2nd Avenue, Anna Nagar, Chennai",
+      city: "Anna Nagar, Chennai",
+      handle: "revathi",
+      org: { name: "Makkal Nalam Katchi", note: "Constituency office · In office since 2021", initials: "MN" },
+      stats: { a: "2.4L", b: "4.7", c: "5 yrs" },
+      statLabels: { a: "Residents", b: "Rating", c: "In office" },
+      responseNote: "Office open today · 10 AM–5 PM",
+    },
+    links: [
+      { id: "ml-l1", title: "Grievance portal", subtitle: "Track an existing complaint", url: "#", icon: "portfolio", clicks: 412, visible: true },
+      { id: "ml-l2", title: "Constituency report 2026", subtitle: "Ward-wise spend · PDF 3.1 MB", url: "#", icon: "brochure", clicks: 190, visible: true },
+      { id: "ml-l3", title: "Assembly speeches", subtitle: "Full recordings, unedited", url: "#", icon: "youtube", clicks: 97, visible: true },
+      { id: "ml-l4", title: "Ward officer directory", subtitle: "Who to contact in your ward", url: "#", icon: "instagram", clicks: 143, visible: true },
+    ],
+    services: [
+      { id: "ml-s1", name: "Janata Darbar", price: 0, duration: "15 min", description: "Open public meeting at the constituency office. Walk in, or reserve a slot.", popular: true, bookings: 61 },
+      { id: "ml-s2", name: "Office appointment", price: 0, duration: "30 min", description: "For residents' associations, institutions and delegations.", bookings: 18 },
+    ],
+    gallery: [
+      { id: "ml-g1", src: "https://picsum.photos/seed/os4u-ml1/800/800", caption: "Ward 88 road inauguration" },
+      { id: "ml-g2", src: "https://picsum.photos/seed/os4u-ml2/600/600", caption: "Free medical camp" },
+      { id: "ml-g3", src: "https://picsum.photos/seed/os4u-ml3/600/600", caption: "School science lab handover" },
+      { id: "ml-g4", src: "https://picsum.photos/seed/os4u-ml4/600/600", caption: "Monsoon readiness review" },
+      { id: "ml-g5", src: "https://picsum.photos/seed/os4u-ml5/600/600", caption: "Ward sabha, Ward 92" },
+      { id: "ml-g6", src: "https://picsum.photos/seed/os4u-ml6/600/600", caption: "Anganwadi visit" },
+    ],
+    events: [
+      {
+        id: "ml-e1",
+        title: "Free Medical Camp — Ward 88",
+        date: "Sept 28, 2026",
+        day: "28",
+        month: "Sep",
+        time: "8:00 AM – 2:00 PM",
+        venue: "Corporation School, 4th Avenue",
+        attendees: 310,
+        price: "Free · walk in",
+        description: "General check-up, eye screening, diabetes and BP testing with free medicines. Bring your ration card.",
+        cover: "https://picsum.photos/seed/os4u-mlevent/900/500",
+      },
+    ],
+    jobs: [
+      { id: "ml-j1", title: "Booth-level volunteer", type: "Volunteer · flexible hours", location: "Anna Nagar (all wards)", pay: "Unpaid · travel reimbursed", tags: ["Weekends", "Field work", "18+"], posted: "2 days ago", applicants: 64, open: true },
+      { id: "ml-j2", title: "Constituency office intern", type: "Internship · 3 months", location: "Anna Nagar, Chennai", pay: "₹12,000 / month", tags: ["Public policy", "Tamil & English", "Students"], posted: "1 week ago", applicants: 38, open: true },
+    ],
+    experience: [
+      { id: "ml-x1", role: "Member of Legislative Assembly", company: "Anna Nagar Constituency", period: "2021 — Present", location: "Chennai", description: "Elected with a margin of 18,400 votes. Member, Standing Committee on Urban Development.", current: true },
+      { id: "ml-x2", role: "Corporation Councillor, Ward 92", company: "Greater Chennai Corporation", period: "2016 — 2021", location: "Chennai", description: "Piped water to 9,200 households and rebuilt four corporation schools." },
+      { id: "ml-x3", role: "Founder", company: "Anna Nagar Residents' Collective", period: "2011 — 2016", location: "Chennai", description: "Citizen group on lake restoration, waste segregation and street lighting." },
+    ],
+    reviews: [
+      { id: "ml-r1", author: "Lakshmi Narayanan", role: "Resident, Ward 88", avatar: "https://i.pravatar.cc/128?img=26", rating: 5, text: "Filed a complaint about a broken sewage line on a Sunday. Work started Tuesday morning. No follow-up calls needed.", date: "Aug 2026" },
+      { id: "ml-r2", author: "Fathima Beevi", role: "Headmistress, Corporation School", avatar: "https://i.pravatar.cc/128?img=20", rating: 5, text: "Our school got a new science lab and toilets before the academic year started, exactly as promised at the ward sabha.", date: "Jul 2026" },
+      { id: "ml-r3", author: "Senthil Kumar", role: "Auto driver, 3rd Avenue", avatar: "https://i.pravatar.cc/128?img=59", rating: 4, text: "Streetlights on our stretch took longer than promised, but the office kept us updated every week until it was done.", date: "Jun 2026" },
+    ],
+    clients: [
+      { id: "ml-c1", name: "Ward 88 RWA", initials: "W88", industry: "Residents' body", since: "2016" },
+      { id: "ml-c2", name: "Corporation School", initials: "CS", industry: "Education", since: "2017" },
+      { id: "ml-c3", name: "Anna Nagar PHC", initials: "PH", industry: "Health", since: "2018" },
+      { id: "ml-c4", name: "Vaigai SHG", initials: "VS", industry: "Livelihood", since: "2019" },
+      { id: "ml-c5", name: "Lake Trust", initials: "LT", industry: "Environment", since: "2015" },
+      { id: "ml-c6", name: "Youth Sports Club", initials: "YS", industry: "Sports", since: "2020" },
+    ],
+    milestones: [
+      { id: "ml-m1", title: "Piped water to all 14 wards", description: "Metro Water connections extended to the last 3,100 uncovered households.", status: "done", progress: 100, meta: "Completed Mar 2026 · ₹18 Cr" },
+      { id: "ml-m2", title: "Rebuild 6 corporation schools", description: "New classrooms, science labs, drinking water and separate toilets.", status: "progress", progress: 67, meta: "4 of 6 done · ₹24 Cr sanctioned" },
+      { id: "ml-m3", title: "Stormwater drains on 22 km of roads", description: "Ending the monsoon flooding on 2nd, 4th and 11th Avenue.", status: "progress", progress: 40, meta: "On track for Nov 2026" },
+      { id: "ml-m4", title: "Free evening coaching centres", description: "Two centres for class 10 and 12 students from government schools.", status: "planned", progress: 10, meta: "Site identified · starts Jan 2027" },
+    ],
+    grievance: {
+      enabled: true,
+      categories: ["Water supply", "Roads & streetlights", "Sanitation & garbage", "Drainage & flooding", "Ration card / certificates", "Pension & welfare", "Other"],
+      sla: "Acknowledged within 48 hours",
+      note: "For emergencies call the 24×7 helpline. Never share bank details or OTPs with anyone claiming to be from this office.",
+      askLocation: true,
+      locationLabel: "Ward / street",
+    },
+    requests: [
+      { id: "ml-q1", ref: "GRV-4821", name: "Lakshmi N.", category: "Drainage & flooding", location: "Ward 88, 4th Ave", summary: "Sewage overflow near the school gate for three days.", status: "In progress", date: "Today" },
+      { id: "ml-q2", ref: "GRV-4820", name: "Senthil K.", category: "Roads & streetlights", location: "Ward 92, 3rd Ave", summary: "Six streetlights not working on the stretch.", status: "Open", date: "Today" },
+      { id: "ml-q3", ref: "GRV-4816", name: "Fathima B.", category: "Water supply", location: "Ward 88", summary: "Low pressure in the morning supply.", status: "Resolved", date: "Yesterday" },
+      { id: "ml-q4", ref: "GRV-4811", name: "Ramesh V.", category: "Ration card / certificates", location: "Ward 90", summary: "Income certificate application pending three weeks.", status: "In progress", date: "2 days ago" },
+    ],
+    knowledge: [
+      { id: "ml-k1", title: "Office hours and how to meet", tags: ["office", "hours", "meet", "darbar", "appointment", "visit", "timing"], content: "The constituency office at 2nd Avenue, Anna Nagar is open Monday to Saturday from 10:00 AM to 5:00 PM. Janata Darbar is held every Monday and Thursday from 10:00 AM to 1:00 PM, where anyone can walk in without an appointment. For delegations and residents' associations, book a 30 minute office appointment. Sunday the office is closed except for emergencies." },
+      { id: "ml-k2", title: "How to file a grievance", tags: ["grievance", "complaint", "file", "raise", "track", "status", "reference"], content: "Use the request section on this page, or call the office. Give your ward, street and a short description. You get a reference number starting with GRV immediately. Every grievance is acknowledged within 48 hours and assigned to a ward officer. Check status by quoting the reference on WhatsApp. Never share bank details or OTPs with anyone claiming to be from the office." },
+      { id: "ml-k3", title: "Certificates and welfare schemes", tags: ["certificate", "ration", "income", "pension", "scheme", "welfare", "apply", "documents"], content: "The office runs a free help desk for income, community and residence certificates, ration card corrections, old age and widow pension, and student scholarships. Bring Aadhaar, ration card and address proof. The help desk operates Tuesday and Friday from 11:00 AM to 3:00 PM. No fee is charged and staff will never ask for money." },
+      { id: "ml-k4", title: "Development work and budgets", tags: ["work", "development", "road", "school", "budget", "promise", "progress", "project"], content: "Current work includes rebuilding six corporation schools, of which four are complete, and stormwater drains across 22 km of road targeted for November 2026. Piped water reached all 14 wards in March 2026 at a cost of 18 crore rupees. Ward-wise budgets and completion status are published in the constituency report on this page." },
+      { id: "ml-k5", title: "Volunteering and internships", tags: ["volunteer", "join", "intern", "help", "student", "youth"], content: "Booth-level volunteers work weekends on field surveys and camp logistics, with travel reimbursed. The office also takes three-month interns at ₹12,000 a month for policy research and casework. Students above 18 are welcome. Apply through this page and the team responds within a week." },
+      { id: "ml-k6", title: "Medical camp details", tags: ["camp", "medical", "health", "event", "free", "checkup"], content: "The free medical camp is on 28 September 2026 from 8:00 AM to 2:00 PM at the Corporation School on 4th Avenue. It covers general check-up, eye screening, diabetes and blood pressure testing, with free medicines. Entry is free and no registration is needed, but bring your ration card. Over 310 residents have confirmed attendance." },
+    ],
+    assistant: {
+      enabled: true,
+      name: "Constituency helpdesk",
+      greeting: "Vanakkam! I'm the constituency office assistant. Ask about office hours, filing a grievance, certificates, welfare schemes or ongoing work, and I can register a request for you right here.",
+      suggestions: ["How do I file a grievance?", "When is Janata Darbar?", "How do I apply for an income certificate?", "What work is happening in my ward?"],
+    },
+    blocks: page(
+      "ml",
+      ["quickInfo", "grievance", "assistant", "milestones", "services", "event", "links", "reviews", "experience", "gallery", "clients", "jobs", "newsletter"],
+      {
+        quickInfo: { title: "Constituency office", subtitle: "Reach the office directly", nav: "Office" },
+        grievance: { title: "Raise a grievance", subtitle: "Complaints, certificates and welfare" },
+        assistant: { title: "Constituency helpdesk", subtitle: "Answers, and files a request for you" },
+        milestones: { title: "Promises & progress", subtitle: "What was promised and where it stands" },
+        services: { title: "Meet your MLA", subtitle: "Public meeting slots · free", nav: "Meet" },
+        event: { title: "Camps & meetings", subtitle: "Open to all residents", nav: "Camps" },
+        links: { title: "Quick links", subtitle: "Portals, reports and updates" },
+        reviews: { title: "Citizen voices", subtitle: "Feedback from residents" },
+        experience: { title: "Public service", subtitle: "Record in office" },
+        gallery: { title: "On the ground", subtitle: "Recent visits and work" },
+        clients: { title: "Working with", subtitle: "Institutions and groups in the constituency" },
+        jobs: { title: "Volunteer with us", subtitle: "Join the ground team" },
+        newsletter: { title: "Constituency updates", subtitle: "Work reports and camp notices" },
+      },
+    ),
+  },
+};
+
+/* ======================= 6. Organiser, not in office ======================= */
+
+const organiser: ExampleProfile = {
+  id: "organiser",
+  name: "Anitha Selvaraj",
+  field: "Community organiser",
+  blurb: "Active in public life without holding office: help desk, campaign tracker and public support.",
+  highlights: ["Announcements", "Support / tip", "Progress tracker", "Openings"],
+  template: "sunset-bold",
+  content: {
+    profile: {
+      name: "Anitha Selvaraj",
+      title: "Community Organiser · Former Ward Councillor",
+      tagline: "No seat, no office staff — just a trust, 60 volunteers and the same work, every week.",
+      avatar: "https://i.pravatar.cc/300?img=36",
+      phone: "+91 90031 44280",
+      whatsapp: "919003144280",
+      email: "anitha@nammamaduraitrust.org",
+      website: "nammamaduraitrust.org",
+      location: "Nagamalai Pudukottai, Madurai, Tamil Nadu",
+      city: "Madurai, Tamil Nadu",
+      handle: "anitha",
+      org: { name: "Namma Madurai Trust", note: "Reg. 2019 · Not a government office", initials: "NM" },
+      stats: { a: "60+", b: "4.8", c: "9 yrs" },
+      statLabels: { a: "Volunteers", b: "Rating", c: "In public life" },
+      responseNote: "Replies personally · usually same day",
+    },
+    links: [
+      { id: "og-l1", title: "What the trust does", subtitle: "Accounts and annual report", url: "#", icon: "portfolio", clicks: 221, visible: true },
+      { id: "og-l2", title: "Volunteer WhatsApp group", subtitle: "Weekend work, open to all", url: "#", icon: "payment", clicks: 388, visible: true },
+      { id: "og-l3", title: "Facebook page", subtitle: "Daily updates from the field", url: "#", icon: "linkedin", clicks: 174, visible: true },
+      { id: "og-l4", title: "2021 election affidavit", subtitle: "Public record · PDF", url: "#", icon: "brochure", clicks: 96, visible: true },
+    ],
+    services: [
+      { id: "og-s1", name: "Weekly public meeting", price: 0, duration: "20 min", description: "Every Saturday at the trust office. Bring your paperwork and we will see what can be done.", popular: true, bookings: 44 },
+      { id: "og-s2", name: "Paperwork help session", price: 0, duration: "30 min", description: "Volunteers help fill and file applications for pensions, certificates and scholarships.", bookings: 72 },
+    ],
+    gallery: [
+      { id: "og-g1", src: "https://picsum.photos/seed/os4u-og1/800/800", caption: "Lake clean-up, 40 volunteers" },
+      { id: "og-g2", src: "https://picsum.photos/seed/os4u-og2/600/600", caption: "Evening study centre" },
+      { id: "og-g3", src: "https://picsum.photos/seed/os4u-og3/600/600", caption: "Paperwork help desk" },
+      { id: "og-g4", src: "https://picsum.photos/seed/os4u-og4/600/600", caption: "Flood relief, Dec 2025" },
+    ],
+    events: [
+      {
+        id: "og-e1",
+        title: "Saturday Public Meeting",
+        date: "Every Saturday",
+        day: "SAT",
+        month: "Wkly",
+        time: "5:00 PM – 7:00 PM",
+        venue: "Trust office, Nagamalai Pudukottai",
+        attendees: 85,
+        price: "Free · open to all",
+        description: "Anyone can come, raise an issue, and see what happened to the ones raised last week.",
+        cover: "https://picsum.photos/seed/os4u-ogevent/900/500",
+      },
+    ],
+    jobs: [
+      { id: "og-j1", title: "Weekend volunteer", type: "Volunteer · 4 hrs a week", location: "Madurai", pay: "Unpaid · lunch provided", tags: ["Any age", "No experience", "Tamil"], posted: "4 days ago", applicants: 52, open: true },
+      { id: "og-j2", title: "Paperwork volunteer", type: "Volunteer · weekday mornings", location: "Trust office", pay: "Unpaid · travel covered", tags: ["Form filling", "Patient", "Tamil & English"], posted: "1 week ago", applicants: 19, open: true },
+    ],
+    experience: [
+      { id: "og-x1", role: "Founder & trustee", company: "Namma Madurai Trust", period: "2019 — Present", location: "Madurai", description: "Runs a weekly help desk, two evening study centres and a volunteer network of sixty.", current: true },
+      { id: "og-x2", role: "Ward Councillor, Ward 34", company: "Madurai Corporation", period: "2016 — 2021", location: "Madurai", description: "One term. Brought piped water to 2,400 households and rebuilt two community halls." },
+      { id: "og-x3", role: "Candidate, Assembly election", company: "Contested as an independent", period: "2021", location: "Madurai", description: "Finished third with 23,800 votes. Continued the constituency work regardless." },
+    ],
+    reviews: [
+      { id: "og-r1", author: "Murugan P.", role: "Auto driver", avatar: "https://i.pravatar.cc/128?img=52", rating: 5, text: "She has no power to sign anything now, and she still sat with me for an hour until my pension form was right.", date: "Aug 2026" },
+      { id: "og-r2", author: "Selvi R.", role: "Parent, Ward 34", avatar: "https://i.pravatar.cc/128?img=21", rating: 5, text: "My daughter goes to the evening study centre. It is free and the volunteers actually turn up.", date: "Jul 2026" },
+      { id: "og-r3", author: "Bhaskar T.", role: "Shop owner", avatar: "https://i.pravatar.cc/128?img=57", rating: 4, text: "Honest about what she can and cannot do. That is rarer than it should be.", date: "Jun 2026" },
+    ],
+    clients: [
+      { id: "og-c1", name: "Ward 34 RWA", initials: "W34", industry: "Residents' body", since: "2016" },
+      { id: "og-c2", name: "Vaigai Green", initials: "VG", industry: "Environment", since: "2020" },
+      { id: "og-c3", name: "Study Centre Trust", initials: "SC", industry: "Education", since: "2021" },
+      { id: "og-c4", name: "Madurai Relief Net", initials: "MR", industry: "Disaster relief", since: "2022" },
+    ],
+    milestones: [
+      { id: "og-m1", title: "Two evening study centres", description: "Free coaching for 140 class 10 and 12 students from government schools.", status: "done", progress: 100, meta: "Running since 2023 · volunteer run" },
+      { id: "og-m2", title: "Vaigai stretch clean-up", description: "Monthly clean-up with the residents' association and the corporation.", status: "progress", progress: 60, meta: "14 of 24 stretches" },
+      { id: "og-m3", title: "1,000 pension applications filed", description: "Helping eligible elderly residents through the paperwork, free.", status: "progress", progress: 72, meta: "718 filed · 512 sanctioned" },
+      { id: "og-m4", title: "Ward-level water audit", description: "Mapping supply gaps street by street to take to the corporation.", status: "planned", progress: 15, meta: "Starts Nov 2026" },
+    ],
+    grievance: {
+      enabled: true,
+      categories: ["Pension & welfare paperwork", "Certificates", "Water or sanitation", "School admission", "Something else"],
+      sla: "A volunteer replies within two days",
+      note: "This is a citizens' trust, not a government office. We cannot sanction or approve anything — we help you file it correctly and follow it up with the department. Never pay anyone who claims to be from this trust.",
+      askLocation: true,
+      locationLabel: "Ward / area",
+    },
+    requests: [
+      { id: "og-q1", ref: "HLP-2210", name: "Murugan P.", category: "Pension & welfare paperwork", location: "Ward 34", summary: "Old age pension rejected once, needs help reapplying.", status: "In progress", date: "Today" },
+      { id: "og-q2", ref: "HLP-2208", name: "Selvi R.", category: "School admission", location: "Ward 31", summary: "Class 6 admission under RTE quota.", status: "Open", date: "Yesterday" },
+      { id: "og-q3", ref: "HLP-2201", name: "Kannan S.", category: "Certificates", location: "Ward 34", summary: "Community certificate for a college application.", status: "Resolved", date: "4 days ago" },
+    ],
+    knowledge: [
+      { id: "og-k1", title: "What this trust can and cannot do", tags: ["what", "can", "cannot", "power", "office", "official", "sanction", "authority"], content: "Anitha does not currently hold any elected office. She was Ward Councillor from 2016 to 2021 and contested the 2021 assembly election as an independent, finishing third. The trust has no authority to sanction, approve or order anything. What it does is help you file applications correctly, follow them up with the right department, and put pressure publicly when something stalls. If someone tells you this office can guarantee an approval, that is false." },
+      { id: "og-k2", title: "The Saturday meeting", tags: ["meeting", "saturday", "when", "meet", "public", "time"], content: "The public meeting runs every Saturday from 5:00 PM to 7:00 PM at the trust office in Nagamalai Pudukottai. Anyone can walk in without an appointment. Bring whatever paperwork you have. Each week begins by reporting what happened to the issues raised the week before, so nothing quietly disappears." },
+      { id: "og-k3", title: "Help with pensions and certificates", tags: ["pension", "certificate", "paperwork", "form", "apply", "help", "welfare", "free"], content: "Volunteers help with old age and widow pensions, income, community and residence certificates, ration card corrections and RTE school admissions. The help is completely free and no one from the trust will ever ask you for money. Bring Aadhaar, ration card and any previous rejection letter. So far 718 pension applications have been filed and 512 sanctioned." },
+      { id: "og-k4", title: "Volunteering", tags: ["volunteer", "join", "help", "weekend", "time"], content: "Weekend volunteers give about four hours on a Saturday, doing field surveys, clean-ups and camp logistics, with lunch provided. Weekday paperwork volunteers sit at the help desk in the mornings. There is no age limit and no experience needed, only patience and Tamil. Sixty people volunteer regularly." },
+      { id: "og-k5", title: "Funding and accounts", tags: ["fund", "money", "donation", "account", "transparent", "contribute", "support"], content: "The trust runs on small public contributions and has no party or corporate funding. Accounts are published annually and linked on this page. Contributions go to the study centres, the help desk and clean-up costs. Any amount is fine, and nothing is expected from people who come for help." },
+    ],
+    assistant: {
+      enabled: true,
+      name: "Trust helpdesk",
+      greeting: "Vanakkam! I can explain what the trust does, help you start a paperwork request, or tell you about the Saturday meeting. One thing up front: this is not a government office and cannot approve anything.",
+      suggestions: ["What can the trust actually do?", "Help me with a pension form", "When is the Saturday meeting?", "How do I volunteer?"],
+    },
+    blocks: page(
+      "og",
+      ["quickInfo", "text", "grievance", "assistant", "milestones", "services", "announcements", "event", "reviews", "experience", "jobs", "support", "gallery", "links", "clients", "newsletter"],
+      {
+        quickInfo: { title: "Reach us", subtitle: "Trust office, Nagamalai Pudukottai", nav: "Reach" },
+        text: {
+          title: "Where things stand",
+          subtitle: "",
+          body: "I am not in office right now. I served one term as Ward Councillor, contested the 2021 assembly election and finished third.\n\nThe work did not stop. A trust, sixty volunteers and a help desk every Saturday — no official letterhead, no authority to approve anything, and no intention of waiting for an election to be useful.",
+        },
+        grievance: { title: "Ask for help", subtitle: "We file it properly and follow it up" },
+        assistant: { title: "Trust helpdesk", subtitle: "Honest about what we can and cannot do" },
+        milestones: { title: "What we are working on", subtitle: "Ongoing, with real numbers" },
+        services: { title: "Come and meet", subtitle: "Free · no appointment needed", nav: "Meet" },
+        announcements: {
+          title: "Notices",
+          subtitle: "",
+          items: [
+            { date: "Sep 12", tag: "Help desk", title: "Pension camp on 20 September", body: "Bring Aadhaar, ration card and any rejection letter. Volunteers from 9 AM." },
+            { date: "Sep 4", tag: "Accounts", title: "2025-26 accounts published", body: "Full income and spending, linked on this page." },
+            { date: "Aug 26", tag: "Field", title: "14th Vaigai stretch cleaned", body: "Ten more to go before the monsoon." },
+          ],
+        },
+        event: { title: "Saturday meeting", subtitle: "Every week, without fail", nav: "Saturday" },
+        reviews: { title: "What people say", subtitle: "" },
+        experience: { title: "Public life", subtitle: "Including the election that was lost" },
+        jobs: { title: "Volunteer", subtitle: "Four hours a week is plenty" },
+        support: {
+          title: "Chip in",
+          subtitle: "Small public contributions only — no party or corporate funding",
+          buttonLabel: "Contribute",
+          items: [{ value: "₹100" }, { value: "₹250" }, { value: "₹500" }, { value: "₹1,000" }],
+        },
+        gallery: { title: "On the ground", subtitle: "" },
+        links: { title: "Records & links", subtitle: "Accounts, affidavit and updates" },
+        clients: { title: "We work with", subtitle: "" },
+        newsletter: { title: "Weekly note", subtitle: "What was raised and what happened to it" },
+      },
+    ),
+  },
+};
+
 /* ======================= registry ======================= */
 
 const consultant: ExampleProfile = {
@@ -582,6 +873,13 @@ const consultant: ExampleProfile = {
   content: DEFAULT_SEED.content,
 };
 
-export const EXAMPLE_PROFILES: ExampleProfile[] = [consultant, photographer, yoga, advocate];
+export const EXAMPLE_PROFILES: ExampleProfile[] = [
+  consultant,
+  mla,
+  organiser,
+  photographer,
+  yoga,
+  advocate,
+];
 
 export const exampleById = (id: string) => EXAMPLE_PROFILES.find((p) => p.id === id) ?? EXAMPLE_PROFILES[0];

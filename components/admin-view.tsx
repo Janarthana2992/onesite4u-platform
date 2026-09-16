@@ -526,7 +526,7 @@ export function AdminView({ framed = false }: { framed?: boolean }) {
                 <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-rose-500 ring-2 ring-white dark:ring-zinc-900" />
               </button>
               <Link
-                href="/"
+                href="/me"
                 className="ml-1 inline-flex items-center gap-1.5 rounded-xl bg-slate-900 px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-slate-800 dark:bg-white dark:text-slate-900"
               >
                 <ExternalLink size={13} /> View live site
@@ -790,7 +790,7 @@ function ProfileTab({ wide }: { wide: boolean }) {
                     <Copy size={11} /> Copy link
                   </button>
                   <Link
-                    href="/"
+                    href="/me"
                     className="inline-flex items-center gap-1 rounded-lg bg-slate-100 px-2 py-1 text-[11px] font-medium dark:bg-zinc-800"
                   >
                     <ExternalLink size={11} /> View live

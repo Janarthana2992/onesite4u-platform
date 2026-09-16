@@ -184,7 +184,7 @@ function Studio() {
               <button onClick={redo} disabled={!canRedo} aria-label="Redo" title="Redo (⇧⌘Z)" className={cn(iconBtn, "h-8 w-8 disabled:opacity-30")}><Redo2 size={16} /></button>
             </div>
             <button onClick={toggle} aria-label="Toggle dark mode" className={iconBtn}>{theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}</button>
-            <Link href={route === "profile" ? "/" : "/admin"} className="hidden items-center gap-1.5 rounded-full bg-slate-900 px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-slate-800 dark:bg-white dark:text-slate-900 sm:flex">
+            <Link href={route === "profile" ? "/me" : "/admin"} className="hidden items-center gap-1.5 rounded-full bg-slate-900 px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-slate-800 dark:bg-white dark:text-slate-900 sm:flex">
               <ExternalLink size={13} /> Preview live
             </Link>
           </div>

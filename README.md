@@ -18,8 +18,9 @@ Open <http://localhost:3000>.
 
 | Route      | What it is                                                                                              |
 | ---------- | ------------------------------------------------------------------------------------------------------- |
-| `/`        | Your own page — whatever is loaded in the editor. Mobile app view below 1024px, desktop web page above it. |
-| `/<handle>` | A published profile: `/sheela`, `/aarav`, `/meera`, `/rohan`. Statically generated, pinned to that person, and what their QR code opens. |
+| `/`        | The directory — every published profile, so nobody lands on a stranger's page. |
+| `/me`      | Your own page, the one the editor and dashboard write to. Mobile app view below 1024px, desktop web page above it. |
+| `/<handle>` | A published profile: `/sheela`, `/revathi`, `/anitha`, `/aarav`, `/meera`, `/rohan`. Statically generated, pinned to that person, and what their QR code opens. |
 | `/webview` | The canvas editor: block library, live page, properties panel.                                            |
 | `/admin`   | The dashboard: content, enquiries, analytics and the live editor.                                         |
 
@@ -132,9 +133,17 @@ Four complete pages built from the same blocks, switchable from **Admin → Exam
 | Profile             | Field                  | Leans on                                     |
 | ------------------- | ---------------------- | -------------------------------------------- |
 | Sheela Bhaskaran    | Financial consultant   | Services · AI assistant · Reviews · Numbers  |
+| Revathi Arumugam    | Sitting MLA            | Request desk · Progress tracker · Event · Openings |
+| Anitha Selvaraj     | Community organiser    | Announcements · Support · Progress tracker · Openings |
 | Aarav Mehta         | Wedding photographer   | Gallery · Pricing · Video · Progress tracker |
 | Meera Krishnan      | Yoga & breathwork      | Opening hours · Schedule · Menu · Team       |
 | Rohan Deshpande     | Advocate               | Certifications · Request desk · FAQ · Downloads |
+
+The two political profiles are deliberately a pair. Revathi holds office: an official grievance desk
+with a 48-hour promise, a promises-versus-delivered tracker and free Janata Darbar slots. Anitha holds
+none: her help desk states plainly that a citizens' trust cannot sanction anything and only files and
+follows up, her tracker shows work in progress rather than promises kept, and the page carries public
+contributions and notices instead of an official portal. Same blocks, opposite situations.
 
 ## Demo flows
 
@@ -150,7 +159,7 @@ Four complete pages built from the same blocks, switchable from **Admin → Exam
 ## Structure
 
 ```
-app/                     layout, your page, /[handle] published profiles, admin, canvas editor
+app/                     directory, /me your page, /[handle] published profiles, admin, canvas editor
 components/              ui primitives, profile sections, sheets, stores, providers
 components/editor.tsx    canvas editor: selection, drag, library, properties
 components/live-editor.tsx   three-pane live editor
