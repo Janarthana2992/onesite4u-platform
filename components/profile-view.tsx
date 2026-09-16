@@ -42,6 +42,7 @@ import { useMediaQuery } from "@/lib/hooks";
 import { ProfileQr } from "@/components/qr-code";
 import { profileLabel, profileUrl } from "@/lib/site";
 import { Reveal } from "@/components/reveal";
+import { ChatWidget } from "@/components/chat-widget";
 
 export type ProfileVariant = "auto" | "mobile" | "web";
 
@@ -211,6 +212,7 @@ export function ProfileView({
             </main>
           </div>
         </div>
+        <ChatWidget />
         {sheets}
       </DesignScope>
     );
@@ -229,10 +231,11 @@ export function ProfileView({
       </main>
       <BottomNav onBook={() => openBooking()} />
       {showCustomize && (
-        <button onClick={() => setCustomizeOpen(true)} className="fixed bottom-24 right-4 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-brand-600 to-accent-600 text-white shadow-xl shadow-brand-600/40 transition-transform active:scale-90" aria-label="Customize design">
+        <button onClick={() => setCustomizeOpen(true)} className="fixed bottom-[10.5rem] right-4 z-40 flex h-12 w-12 items-center justify-center rounded-full border border-slate-200 bg-white text-brand-600 shadow-xl transition-transform active:scale-90 dark:border-zinc-700 dark:bg-zinc-900 dark:text-brand-300 lg:bottom-[5.5rem]" aria-label="Customize design">
           <Palette size={20} />
         </button>
       )}
+      <ChatWidget />
       {sheets}
     </DesignScope>
   );

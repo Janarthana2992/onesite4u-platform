@@ -16,6 +16,7 @@ import {
   X,
 } from "lucide-react";
 import { slots, type Job, type Service } from "@/data/mock";
+import { isBooked, isClosed, sameDay } from "@/lib/slots";
 import { useContent } from "@/components/content-store";
 import { Button, Field, Input, Sheet, SuccessState, Textarea, cn } from "@/components/ui";
 import { useToast } from "@/components/providers";
@@ -44,11 +45,6 @@ function buildMonth(month: Date): (Date | null)[] {
   return cells;
 }
 
-const sameDay = (a: Date, b: Date) =>
-  a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
-
-/** Deterministic "already booked" slots so the calendar looks alive. */
-const isBooked = (d: Date, i: number) => (d.getDate() * 7 + d.getMonth() * 3 + i) % 4 === 0;
 
 const fmtDate = (d: Date | null, withYear = false) =>
   d?.toLocaleDateString("en-IN", {
@@ -186,7 +182,7 @@ export function BookingSheet({
             <div className="mt-1 grid grid-cols-7 gap-y-1">
               {days.map((d, i) => {
                 if (!d) return <span key={`e${i}`} />;
-                const disabled = d < today || d.getDay() === 0;
+                const disabled = d < today || isClosed(d);
                 const isSel = !!date && sameDay(d, date);
                 const isToday = sameDay(d, today);
                 return (

@@ -78,6 +78,32 @@ change repaints the public page, the editor preview and the admin together.
 | Layout      | 3 corner radii, 4 card styles, 3 button shapes, line height, base font size                          |
 | Theme       | Light and dark, following the system setting or an explicit toggle                                   |
 
+## The chat concierge
+
+Every profile carries a chat bubble. It answers from the knowledge base **and completes the work in
+the conversation** — no forms, no navigation:
+
+| Say | What happens |
+| --- | --- |
+| "Book an appointment" | Service → day → free slot → name → phone → a confirmed appointment with a reference |
+| "RSVP for the workshop" | Name → email → phone → an e-ticket |
+| "Apply for a role" | Role → name → email → phone → an application |
+| "Subscribe" | Email → confirmed |
+| "Raise a request" | Category → name → phone → description → a reference number |
+| "Call" / "WhatsApp" / "Save contact" / "Share" | Performed straight away |
+| Anything else | Answered from the knowledge base, with sources cited |
+
+**Voice both ways.** A mic button dictates (Web Speech API, shown only where the browser supports it)
+and a speaker toggle reads replies aloud. Everything runs in the browser.
+
+Choice steps only accept one of the offered options, answers are validated (a bad phone number or
+email is refused with a reason), "cancel" exits a flow at any point, and the opening suggestions adapt
+to what that profile actually offers — no "Raise a request" on a profile without a request desk.
+
+`lib/chat-agent.ts` is a pure state machine, independent of React, so the flows can be tested on their
+own. Appointment availability comes from `lib/slots.ts`, shared with the booking sheet, so the chat
+never offers a slot the calendar would refuse.
+
 ## Assistants
 
 **Visitor assistant** — `lib/rag.ts` tokenizes the question, scores knowledge entries by title, tag and
@@ -118,6 +144,7 @@ Four complete pages built from the same blocks, switchable from **Admin → Exam
 - **Request desk** — your own categories → a reference number → an admin inbox filtered by status.
 - **Subscribe** — email → confirmation.
 - **Ask AI** — a suggested question or your own, answered with cited sources.
+- **Chat concierge** — the bubble on every profile: book, RSVP, apply, subscribe or raise a request by typing or speaking.
 - **Extras** — a real scannable QR code for the deployed site, Web Share, dark mode, and a genuinely real vCard download.
 
 ## Structure
@@ -133,6 +160,8 @@ data/design.ts           palettes, templates, fonts, banners
 data/profiles.ts         the four example profiles
 data/seed.ts             default demo content
 lib/site.ts              the published site URL and per-handle links, in one place
+lib/chat-agent.ts        the chat concierge: intent detection and flow state machine
+lib/slots.ts             appointment availability, shared by the chat and the booking sheet
 lib/rag.ts               retrieval and answer composition
 lib/ingest.ts            document chunking
 lib/account-ai.ts        private account assistant
